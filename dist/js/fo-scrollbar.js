@@ -16,8 +16,48 @@ if (typeof define === 'function' && define.amd) {
 }
 
 },{"./init":2}],2:[function(require,module,exports){
-"use strict";
+'use strict';
 
-module.exports = function () {};
+var instance = require('./instance');
+
+module.exports = function (element) {
+  console.log(element);
+  var i = new instance(instance);
+  console.log(i.container.width);
+};
+
+},{"./instance":3}],3:[function(require,module,exports){
+'use strict';
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var Instance = (function () {
+  function Instance(element) {
+    _classCallCheck(this, Instance);
+
+    this.container = {
+      width: 400
+    };
+
+    this.content = {};
+
+    this.rail = {};
+
+    this.slider = {};
+  }
+
+  _createClass(Instance, [{
+    key: 'toString',
+    value: function toString() {
+      return '(' + this.x + ', ' + this.y + ')';
+    }
+  }]);
+
+  return Instance;
+})();
+
+module.exports = Instance;
 
 },{}]},{},[1]);
