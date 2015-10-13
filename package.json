@@ -18,5 +18,10 @@
   "bugs": {
     "url": "https://github.com/forsigner/fo-scrollbar/issues"
   },
-  "homepage": "https://github.com/forsigner/fo-scrollbar#readme"
+  "homepage": "https://github.com/forsigner/fo-scrollbar#readme",
+  "devDependencies": {
+    "browserify": "^11.2.0",
+    "gulp-rename": "^1.2.2",
+    "vinyl-source-stream": "^1.1.0"
+  }
 }
