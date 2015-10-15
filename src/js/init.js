@@ -1,7 +1,15 @@
-var instance = require('./instance');
+let instance = require('./instance');
+let clickRail =require('./event/click-rail');
+let dragSlider =require('./event/drag-slider');
+let mouseWheel =require('./event/mouse-wheel');
+let pressKeyboard =require('./event/press-keyboard');
+
 
 module.exports = function(element) {
-  console.log(element);
-  var i = new instance(instance);
-  console.log(i.container.width);
+  let i = new instance(instance);
+
+  clickRail(i);
+  dragSlider(i);
+  mouseWheel(i);
+  pressKeyboard(i);
 };
