@@ -21,23 +21,6 @@ module.exports = function (i) {};
 },{}],5:[function(require,module,exports){
 'use strict';
 
-var init = require('./init');
-var foScrollbar = {
-  init: init,
-  update: 'update'
-};
-
-if (typeof define === 'function' && define.amd) {
-  define('fo-scrollbar', [], function () {
-    return foScrollbar;
-  });
-} else {
-  window.foScrollbar = foScrollbar;
-}
-
-},{"./init":6}],6:[function(require,module,exports){
-'use strict';
-
 var instance = require('./instance');
 var clickRail = require('./event/click-rail');
 var dragSlider = require('./event/drag-slider');
@@ -45,7 +28,7 @@ var mouseWheel = require('./event/mouse-wheel');
 var pressKeyboard = require('./event/press-keyboard');
 
 module.exports = function (element) {
-  var i = new instance(instance);
+  var i = new instance(element);
 
   clickRail(i);
   dragSlider(i);
@@ -53,16 +36,23 @@ module.exports = function (element) {
   pressKeyboard(i);
 };
 
-},{"./event/click-rail":1,"./event/drag-slider":2,"./event/mouse-wheel":3,"./event/press-keyboard":4,"./instance":7}],7:[function(require,module,exports){
+},{"./event/click-rail":1,"./event/drag-slider":2,"./event/mouse-wheel":3,"./event/press-keyboard":4,"./instance":6}],6:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
+var dom = require('./util/dom');
+
 var Instance = (function () {
   function Instance(element) {
     _classCallCheck(this, Instance);
+
+    console.log(element);
+    var ele = dom.createElement('<div class="e">hello</div>');
+    console.log(ele);
+    console.log(ele.className);
 
     this.container = {
       width: 400
@@ -87,4 +77,34 @@ var Instance = (function () {
 
 module.exports = Instance;
 
-},{}]},{},[5]);
+},{"./util/dom":8}],7:[function(require,module,exports){
+'use strict';
+
+var init = require('./init');
+var foScrollbar = {
+  init: init,
+  update: 'update'
+};
+
+if (typeof define === 'function' && define.amd) {
+  define('fo-scrollbar', [], function () {
+    return foScrollbar;
+  });
+} else {
+  window.foScrollbar = foScrollbar;
+}
+
+},{"./init":5}],8:[function(require,module,exports){
+'use strict';
+
+var dom = {};
+
+dom.createElement = function (string) {
+  var element = document.createElement('div');
+  element.innerHTML = string;
+  return element.firstElementChild;
+};
+
+module.exports = dom;
+
+},{}]},{},[7]);

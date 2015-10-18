@@ -6,7 +6,7 @@ let pressKeyboard =require('./event/press-keyboard');
 
 
 module.exports = function(element) {
-  let i = new instance(instance);
+  let i = new instance(element);
 
   clickRail(i);
   dragSlider(i);
