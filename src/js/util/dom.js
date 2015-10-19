@@ -6,8 +6,6 @@ function getCss(element, styleName) {
 
 function setSingleCss(element, styleName, styleValue) {
   if (typeof styleValue === 'number') styleValue = styleValue.toString() + 'px';
-  console.log(styleName);
-  console.log(styleValue);
   element.style[styleName] = styleValue;
   return element;
 }
@@ -51,7 +49,6 @@ dom.removeClass = function(element, className) {
 };
 
 dom.css = function(element, styleNameOrObject, styleValue) {
-  console.log(element);
   if (typeof styleNameOrObject === 'object') {
     return setMultiCss(element, styleNameOrObject);
   } else {

@@ -25,6 +25,7 @@ class Instance {
     };
 
     this.railY = {
+      element: $railY,
       width: 400,
       height: 1000
     };
@@ -35,6 +36,7 @@ class Instance {
     };
 
     this.sliderY = {
+      element: $sliderY,
       width: 400,
       height: parseInt(this.container.height * this.container.height / this.content.height, 10)
     };

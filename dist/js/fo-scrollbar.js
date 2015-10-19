@@ -1,9 +1,32 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-"use strict";
+'use strict';
 
-module.exports = function (i) {};
+var event = require('../util/event');
+var dom = require('../util/dom');
 
-},{}],2:[function(require,module,exports){
+module.exports = function (i) {
+  event.bind(i.railY.element, 'click', function (e) {
+    var layerY = e.layerY;
+    // console.log(e);
+    // console.log(e.layerY);
+    var top = dom.css(i.sliderY.element, 'top');
+
+    var val;
+    val = parseInt(top, 10);
+    var stop = val + 50;
+
+    var id = setInterval(function () {
+      val = val + 1;
+      i.sliderY.element.style.top = val + 'px';
+
+      if (val > stop) {
+        window.clearInterval(id);
+      }
+    }, 1);
+  });
+};
+
+},{"../util/dom":8,"../util/event":9}],2:[function(require,module,exports){
 "use strict";
 
 module.exports = function (i) {};
@@ -71,6 +94,7 @@ var Instance = (function () {
     };
 
     this.railY = {
+      element: $railY,
       width: 400,
       height: 1000
     };
@@ -81,6 +105,7 @@ var Instance = (function () {
     };
 
     this.sliderY = {
+      element: $sliderY,
       width: 400,
       height: parseInt(this.container.height * this.container.height / this.content.height, 10)
     };
@@ -129,8 +154,6 @@ function getCss(element, styleName) {
 
 function setSingleCss(element, styleName, styleValue) {
   if (typeof styleValue === 'number') styleValue = styleValue.toString() + 'px';
-  console.log(styleName);
-  console.log(styleValue);
   element.style[styleName] = styleValue;
   return element;
 }
@@ -174,7 +197,6 @@ dom.removeClass = function (element, className) {
 };
 
 dom.css = function (element, styleNameOrObject, styleValue) {
-  console.log(element);
   if (typeof styleNameOrObject === 'object') {
     return setMultiCss(element, styleNameOrObject);
   } else {
@@ -187,5 +209,16 @@ dom.css = function (element, styleNameOrObject, styleValue) {
 };
 
 module.exports = dom;
+
+},{}],9:[function(require,module,exports){
+"use strict";
+
+var event = {};
+
+event.bind = function (element, name, callback) {
+  element.addEventListener(name, callback, false);
+};
+
+module.exports = event;
 
 },{}]},{},[7]);
