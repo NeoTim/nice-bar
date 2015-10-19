@@ -49,20 +49,44 @@ var Instance = (function () {
   function Instance(element) {
     _classCallCheck(this, Instance);
 
-    console.log(element);
-    var ele = dom.createElement('<div class="e">hello</div>');
-    console.log(ele);
-    console.log(ele.className);
+    var $railY = dom.createElement('<div class="fo-scrollbar-rail-y"></div>');
+    dom.appendTo($railY, element);
+
+    var $sliderY = dom.createElement('<div class="fo-scrollbar-slider-y"></div>');
+    dom.appendTo($sliderY, element);
 
     this.container = {
-      width: 400
+      width: 400,
+      height: element.clientHeight
     };
 
-    this.content = {};
+    this.content = {
+      width: 400,
+      height: element.scrollHeight
+    };
 
-    this.rail = {};
+    this.railX = {
+      width: 400,
+      height: ''
+    };
 
-    this.slider = {};
+    this.railY = {
+      width: 400,
+      height: 1000
+    };
+
+    this.sliderX = {
+      width: 400,
+      height: ''
+    };
+
+    this.sliderY = {
+      width: 400,
+      height: parseInt(this.container.height * this.container.height / this.content.height, 10)
+    };
+
+    // setSliderXheight()
+    dom.css($sliderY, 'height', this.sliderY.height + 'px');
   }
 
   _createClass(Instance, [{
@@ -99,10 +123,67 @@ if (typeof define === 'function' && define.amd) {
 
 var dom = {};
 
+function getCss(element, styleName) {
+  return window.getComputedStyle(element)[styleName];
+}
+
+function setSingleCss(element, styleName, styleValue) {
+  if (typeof styleValue === 'number') styleValue = styleValue.toString() + 'px';
+  console.log(styleName);
+  console.log(styleValue);
+  element.style[styleName] = styleValue;
+  return element;
+}
+
+function setMultiCss(element, obj) {
+  for (var key in obj) {
+    var styleValue = obj[key];
+    if (typeof styleValue === 'number') styleValue = styleValue.toString() + 'px';
+    element.style[styleName] = styleValue;
+  }
+  return element;
+}
+
 dom.createElement = function (string) {
   var element = document.createElement('div');
   element.innerHTML = string;
   return element.firstElementChild;
+};
+
+dom.appendTo = function (child, parent) {
+  parent.appendChild(child);
+};
+
+dom.addClass = function (element, className) {
+  var classes = element.className.split(' ');
+  if (classes.indexOf(className) < 0) {
+    classes.push(className);
+  }
+  element.className = classes.join(' ');
+  return element;
+};
+
+dom.removeClass = function (element, className) {
+  var classes = element.className.split(' ');
+  var index = classes.indexOf(className);
+  if (indexOf > -1) {
+    classes.splice(index, 1);
+  }
+  element.className = classes.join(' ');
+  return element;
+};
+
+dom.css = function (element, styleNameOrObject, styleValue) {
+  console.log(element);
+  if (typeof styleNameOrObject === 'object') {
+    return setMultiCss(element, styleNameOrObject);
+  } else {
+    if (typeof styleValue === 'undefined') {
+      return getCss(element, styleNameOrObject);
+    } else {
+      return setSingleCss(element, styleNameOrObject, styleValue);
+    }
+  }
 };
 
 module.exports = dom;
