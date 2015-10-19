@@ -8,6 +8,8 @@ class Instance {
     var $sliderY = dom.createElement('<div class="fo-scrollbar-slider-y"></div>');
     dom.appendTo($sliderY, element);
 
+    this.ratioX = element.clientWidth / element.scrollWidth;
+    this.ratioY = element.clientHeight / element.scrollHeight;
 
     this.container = {
       width: 400,
@@ -37,9 +39,10 @@ class Instance {
 
     this.sliderY = {
       element: $sliderY,
-      width: 400,
+      width: 40,
       height: parseInt(this.container.height * this.container.height / this.content.height, 10)
     };
+
 
     // setSliderXheight()
     dom.css($sliderY, 'height', this.sliderY.height + 'px');
