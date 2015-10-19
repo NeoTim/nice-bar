@@ -4,13 +4,17 @@ var dom = require('../util/dom');
 module.exports = function(i) {
   var ratioY = i.ratioY;
 
+  i.container.element.scrollTop = 100;
+  i.railY.element.scrollTop = 0;
+
   event.bind(i.railY.element, 'click', function(e) {
 
     var top = dom.css(i.sliderY.element, 'top');
     var topInt = parseInt(top, 10);
+    var step = parseInt(i.container.height * ratioY, 10);
 
     if (e.layerY > topInt) {
-      var stop = topInt + 50;
+      var stop = topInt + step;
       var id = setInterval(function() {
         topInt++;
         i.sliderY.element.style.top = topInt + 'px';
@@ -20,8 +24,10 @@ module.exports = function(i) {
         }
       }, 1);
 
+
+
     } else {
-      var stop = topInt - 50;
+      var stop = topInt - step;
       var id = setInterval(function() {
         topInt--;
         i.sliderY.element.style.top = topInt + 'px';

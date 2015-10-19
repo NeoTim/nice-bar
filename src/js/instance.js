@@ -12,6 +12,7 @@ class Instance {
     this.ratioY = element.clientHeight / element.scrollHeight;
 
     this.container = {
+      element: element,
       width: 400,
       height: element.clientHeight
     };
