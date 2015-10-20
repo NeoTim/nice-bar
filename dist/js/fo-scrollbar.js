@@ -11,20 +11,19 @@ module.exports = function (i) {
   var railYHeight = i.railY.height;
 
   function clickRailY(e) {
-    var originTopNumber = parseInt(dom.css(i.sliderY.element, 'top'), 10);
-    var newTopNumber = e.layerY - i.sliderY.height / 2;
-    var newTop = newTopNumber.toString() + 'px';
+    var originTop = dom.css(i.sliderY.element, 'top');
+    var newTop = e.layerY - i.sliderY.height / 2;
 
-    if (newTopNumber < 1) {
+    if (newTop < 1) {
       dom.css(i.sliderY.element, 'top', newTop);
       $content.scrollTop = 0;
       return;
     }
 
-    if (newTopNumber + i.sliderY.height > i.railY.height) newTopNumber = i.railY.height - i.sliderY.height;
+    if (newTop + i.sliderY.height > i.railY.height) newTop = i.railY.height - i.sliderY.height;
 
     dom.css(i.sliderY.element, 'top', newTop);
-    var journey = newTopNumber - originTopNumber;
+    var journey = newTop - originTop;
     var scrollTop = journey / ratioY;
     $content.scrollTop += scrollTop;
   }
@@ -41,19 +40,17 @@ var dom = require('../util/dom');
 module.exports = function (i) {
   var currentPageY = undefined;
   var currentHeight = undefined;
-  var currentHeightInt = undefined;
   var differenceHeight = i.railY.height - i.sliderY.height;
 
   event.bind(i.sliderY.element, 'mousedown', function (e) {
     currentPageY = e.pageY;
     currentHeight = dom.css(i.sliderY.element, 'top');
-    currentHeightInt = parseInt(dom.css(i.sliderY.element, 'top'), 10);
     event.bind(document, 'mousemove', mouseMoveHandler);
     event.once(document, 'mouseup', mouseUpHandler);
   });
 
   function mouseMoveHandler(e) {
-    var newTop = e.pageY - currentPageY + currentHeightInt;
+    var newTop = e.pageY - currentPageY + currentHeight;
     console.log(newTop);
 
     if (newTop <= 0) {
@@ -206,7 +203,11 @@ if (typeof define === 'function' && define.amd) {
 var dom = {};
 
 function getCss(element, styleName) {
-  return window.getComputedStyle(element)[styleName];
+  var styleValue = window.getComputedStyle(element)[styleName];
+  if (parseInt(styleValue, 10) || parseInt(styleValue, 10) === 0) {
+    styleValue = parseInt(styleValue, 10);
+  }
+  return styleValue;
 }
 
 function setSingleCss(element, styleName, styleValue) {

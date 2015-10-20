@@ -8,23 +8,21 @@ module.exports = function(i) {
   var railYHeight = i.railY.height;
 
   function clickRailY(e) {
-    var originTopNumber = parseInt(dom.css(i.sliderY.element, 'top'), 10);
-    var newTopNumber = e.layerY - i.sliderY.height / 2;
-    var newTop = newTopNumber.toString() + 'px';
+    var originTop = dom.css(i.sliderY.element, 'top');
+    var newTop = e.layerY - i.sliderY.height / 2;
 
-    if (newTopNumber < 1) {
+    if (newTop < 1) {
       dom.css(i.sliderY.element, 'top', newTop);
       $content.scrollTop = 0;
       return;
     }
 
-    if (newTopNumber + i.sliderY.height > i.railY.height) newTopNumber = i.railY.height - i.sliderY.height;
+    if (newTop + i.sliderY.height > i.railY.height) newTop = i.railY.height - i.sliderY.height;
 
     dom.css(i.sliderY.element, 'top', newTop);
-    var journey = newTopNumber - originTopNumber;
+    var journey = newTop - originTop;
     var scrollTop = journey / ratioY;
     $content.scrollTop += scrollTop;
-
   }
 
   event.bind(i.railY.element, 'click', clickRailY);

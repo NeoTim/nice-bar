@@ -4,19 +4,17 @@ var dom = require('../util/dom');
 module.exports = function(i) {
   let currentPageY;
   let currentHeight;
-  let currentHeightInt;
   let differenceHeight = i.railY.height - i.sliderY.height;
 
   event.bind(i.sliderY.element, 'mousedown', function(e) {
     currentPageY = e.pageY;
     currentHeight = dom.css(i.sliderY.element, 'top');
-    currentHeightInt = parseInt(dom.css(i.sliderY.element, 'top'), 10);
     event.bind(document, 'mousemove', mouseMoveHandler);
     event.once(document, 'mouseup', mouseUpHandler);
   });
 
   function mouseMoveHandler(e) {
-    let newTop = e.pageY - currentPageY + currentHeightInt;
+    let newTop = e.pageY - currentPageY + currentHeight;
     console.log(newTop);
 
     if (newTop <= 0) {

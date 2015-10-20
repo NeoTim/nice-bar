@@ -1,7 +1,11 @@
 let dom = {};
 
 function getCss(element, styleName) {
-  return window.getComputedStyle(element)[styleName];
+  var styleValue = window.getComputedStyle(element)[styleName];
+  if (parseInt(styleValue, 10) || parseInt(styleValue, 10) === 0) {
+    styleValue = parseInt(styleValue, 10);
+  }
+  return styleValue;
 }
 
 function setSingleCss(element, styleName, styleValue) {
