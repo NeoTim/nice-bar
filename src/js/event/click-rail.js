@@ -1,15 +1,16 @@
-var event = require('../util/event');
-var dom = require('../util/dom');
+let event = require('../util/event');
+let dom = require('../util/dom');
 
 module.exports = function(i) {
-  var $content = i.container.element.firstElementChild;
+  let $content = i.container.element.firstElementChild;
 
-  var ratioY = i.ratioY;
-  var railYHeight = i.railY.height;
+  let ratioY = i.ratioY;
+  let railYHeight = i.railY.height;
 
+  // has bug
   function clickRailY(e) {
-    var originTop = dom.css(i.sliderY.element, 'top');
-    var newTop = e.layerY - i.sliderY.height / 2;
+    let originTop = dom.css(i.sliderY.element, 'top');
+    let newTop = e.layerY - i.sliderY.height / 2;
 
     if (newTop < 1) {
       dom.css(i.sliderY.element, 'top', newTop);
@@ -20,8 +21,8 @@ module.exports = function(i) {
     if (newTop + i.sliderY.height > i.railY.height) newTop = i.railY.height - i.sliderY.height;
 
     dom.css(i.sliderY.element, 'top', newTop);
-    var journey = newTop - originTop;
-    var scrollTop = journey / ratioY;
+    let journey = newTop - originTop;
+    let scrollTop = journey / ratioY;
     $content.scrollTop += scrollTop;
   }
 

@@ -2,20 +2,26 @@ let event = require('../util/event');
 var dom = require('../util/dom');
 
 module.exports = function(i) {
-  let currentPageY;
-  let currentHeight;
+  let originPageY;
+  let originTop;
+  let originScrollTop;
   let differenceHeight = i.railY.height - i.sliderY.height;
+  let $content = i.container.element.firstElementChild;
+  let ratioY = i.ratioY;
 
   event.bind(i.sliderY.element, 'mousedown', function(e) {
-    currentPageY = e.pageY;
-    currentHeight = dom.css(i.sliderY.element, 'top');
+    originPageY = e.pageY;
+    originTop = dom.css(i.sliderY.element, 'top');
+    originScrollTop = $content.scrollTop;
+
     event.bind(document, 'mousemove', mouseMoveHandler);
     event.once(document, 'mouseup', mouseUpHandler);
   });
 
   function mouseMoveHandler(e) {
-    let newTop = e.pageY - currentPageY + currentHeight;
-    console.log(newTop);
+
+    // update slider
+    let newTop = e.pageY - originPageY + originTop;
 
     if (newTop <= 0) {
       newTop = 0
@@ -23,6 +29,13 @@ module.exports = function(i) {
       newTop = differenceHeight;
     }
     dom.css(i.sliderY.element, 'top', newTop);
+
+    // udpate content
+    let journey = newTop - originTop;
+    let newScrollTop = journey / ratioY;
+    newScrollTop += originScrollTop
+    $content.scrollTop = newScrollTop;
+
     e.stopPropagation();
     e.preventDefault();
   }

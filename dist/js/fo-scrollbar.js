@@ -10,6 +10,7 @@ module.exports = function (i) {
   var ratioY = i.ratioY;
   var railYHeight = i.railY.height;
 
+  // has bug
   function clickRailY(e) {
     var originTop = dom.css(i.sliderY.element, 'top');
     var newTop = e.layerY - i.sliderY.height / 2;
@@ -38,20 +39,26 @@ var event = require('../util/event');
 var dom = require('../util/dom');
 
 module.exports = function (i) {
-  var currentPageY = undefined;
-  var currentHeight = undefined;
+  var originPageY = undefined;
+  var originTop = undefined;
+  var originScrollTop = undefined;
   var differenceHeight = i.railY.height - i.sliderY.height;
+  var $content = i.container.element.firstElementChild;
+  var ratioY = i.ratioY;
 
   event.bind(i.sliderY.element, 'mousedown', function (e) {
-    currentPageY = e.pageY;
-    currentHeight = dom.css(i.sliderY.element, 'top');
+    originPageY = e.pageY;
+    originTop = dom.css(i.sliderY.element, 'top');
+    originScrollTop = $content.scrollTop;
+
     event.bind(document, 'mousemove', mouseMoveHandler);
     event.once(document, 'mouseup', mouseUpHandler);
   });
 
   function mouseMoveHandler(e) {
-    var newTop = e.pageY - currentPageY + currentHeight;
-    console.log(newTop);
+
+    // update slider
+    var newTop = e.pageY - originPageY + originTop;
 
     if (newTop <= 0) {
       newTop = 0;
@@ -59,6 +66,13 @@ module.exports = function (i) {
       newTop = differenceHeight;
     }
     dom.css(i.sliderY.element, 'top', newTop);
+
+    // udpate content
+    var journey = newTop - originTop;
+    var newScrollTop = journey / ratioY;
+    newScrollTop += originScrollTop;
+    $content.scrollTop = newScrollTop;
+
     e.stopPropagation();
     e.preventDefault();
   }
