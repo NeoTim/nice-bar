@@ -10,12 +10,16 @@ module.exports = function(i) {
   function clickRailY(e) {
     var originTopNumber = parseInt(dom.css(i.sliderY.element, 'top'), 10);
     var newTopNumber = e.layerY - i.sliderY.height / 2;
+    var newTop = newTopNumber.toString() + 'px';
 
-    if (newTopNumber < 1) return $content.scrollTop = 0;
+    if (newTopNumber < 1) {
+      dom.css(i.sliderY.element, 'top', newTop);
+      $content.scrollTop = 0;
+      return;
+    }
 
     if (newTopNumber + i.sliderY.height > i.railY.height) newTopNumber = i.railY.height - i.sliderY.height;
 
-    var newTop = newTopNumber.toString() + 'px';
     dom.css(i.sliderY.element, 'top', newTop);
     var journey = newTopNumber - originTopNumber;
     var scrollTop = journey / ratioY;

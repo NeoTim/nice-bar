@@ -10,8 +10,10 @@ module.exports = function(i) {
   });
 
   function mouseMoveHandler(e) {
-    console.log(e.pageY);
     console.log(e.pageY - currentPageY);
+    
+    e.stopPropagation();
+    e.preventDefault();
   }
 
   function mouseUpHandler() {
