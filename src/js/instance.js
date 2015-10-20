@@ -2,11 +2,18 @@ let dom = require('./util/dom');
 
 class Instance {
   constructor(element) {
-    var $railY = dom.createElement('<div class="fo-scrollbar-rail-y"></div>');
-    dom.appendTo($railY, element);
+    var $content = element.firstElementChild;
+    console.log($content.scrollHeight);
+    console.log($content.clientHeight);
 
-    var $sliderY = dom.createElement('<div class="fo-scrollbar-slider-y"></div>');
-    dom.appendTo($sliderY, element);
+    if ($content.scrollHeight > $content.clientHeight) {
+      var $railY = dom.createElement('<div class="fo-scrollbar-rail-y"></div>');
+      dom.appendTo($railY, element);
+
+      var $sliderY = dom.createElement('<div class="fo-scrollbar-slider-y"></div>');
+      dom.appendTo($sliderY, element);
+    }
+
 
     this.ratioX = element.clientWidth / element.scrollWidth;
     this.ratioY = element.clientHeight / element.scrollHeight;
