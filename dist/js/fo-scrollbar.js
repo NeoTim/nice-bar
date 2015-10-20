@@ -36,6 +36,7 @@ module.exports = function (i) {
 'use strict';
 
 var event = require('../util/event');
+var dom = require('../util/dom');
 
 module.exports = function (i) {
   var currentPageY;
@@ -47,20 +48,28 @@ module.exports = function (i) {
   });
 
   function mouseMoveHandler(e) {
-    console.log(e.pageY - currentPageY);
+    var newTop = e.pageY - currentPageY;
+    console.log(newTop);
 
+    if (newTop < 0) {
+      newTop = 0;
+    } else if (newTop >= 340) {
+      newTop = 340;
+    }
+
+    dom.css(i.sliderY.element, 'top', newTop);
     e.stopPropagation();
     e.preventDefault();
   }
 
   function mouseUpHandler() {
-    console.log(2222);
+    // console.log(2222);
     // todo
     event.unbind(document, 'mousemove', mouseMoveHandler);
   }
 };
 
-},{"../util/event":9}],3:[function(require,module,exports){
+},{"../util/dom":8,"../util/event":9}],3:[function(require,module,exports){
 "use strict";
 
 module.exports = function (i) {};
