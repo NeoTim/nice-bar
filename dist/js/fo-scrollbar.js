@@ -10,7 +10,7 @@ module.exports = function (i) {
   var ratioY = i.ratioY;
   var railYHeight = i.railY.height;
 
-  event.bind(i.railY.element, 'click', function (e) {
+  function clickRailY(e) {
     var originTopNumber = parseInt(dom.css(i.sliderY.element, 'top'), 10);
     var newTopNumber = e.layerY - i.sliderY.height / 2;
 
@@ -23,15 +23,31 @@ module.exports = function (i) {
     var journey = newTopNumber - originTopNumber;
     var scrollTop = journey / ratioY;
     $content.scrollTop += scrollTop;
-  });
+  }
+
+  event.bind(i.railY.element, 'click', clickRailY);
 };
 
 },{"../util/dom":8,"../util/event":9}],2:[function(require,module,exports){
-"use strict";
+'use strict';
 
-module.exports = function (i) {};
+var event = require('../util/event');
 
-},{}],3:[function(require,module,exports){
+module.exports = function (i) {
+  var currentPageY;
+
+  event.bind(i.sliderY.element, 'mousedown', function (e) {
+    currentPageY = e.pageY;
+    event.bind(document, 'mousemove', mouseMoveHandler);
+  });
+
+  function mouseMoveHandler(e) {
+    // console.log(e.pageY);
+    // console.log(e.pageY - currentPageY);
+  }
+};
+
+},{"../util/event":9}],3:[function(require,module,exports){
 "use strict";
 
 module.exports = function (i) {};
@@ -230,8 +246,21 @@ module.exports = dom;
 
 var event = {};
 
-event.bind = function (element, name, callback) {
-  element.addEventListener(name, callback, false);
+event.bind = function (element, name, listener) {
+  element.addEventListener(name, listener, false);
+};
+
+event.unbind = function (element, name, listener) {
+  element.removeEventListener(name, listener, false);
+};
+
+event.once = function (element, name, listener) {
+  var that = this;
+  var once = function once(e) {
+    that.unbind(element, name, once);
+    listener(e);
+  };
+  that.bind(element, name, once);
 };
 
 module.exports = event;

@@ -7,7 +7,7 @@ module.exports = function(i) {
   var ratioY = i.ratioY;
   var railYHeight = i.railY.height;
 
-  event.bind(i.railY.element, 'click', function(e) {
+  function clickRailY(e) {
     var originTopNumber = parseInt(dom.css(i.sliderY.element, 'top'), 10);
     var newTopNumber = e.layerY - i.sliderY.height / 2;
 
@@ -21,5 +21,8 @@ module.exports = function(i) {
     var scrollTop = journey / ratioY;
     $content.scrollTop += scrollTop;
 
-  });
+  }
+
+  event.bind(i.railY.element, 'click', clickRailY);
+
 }
