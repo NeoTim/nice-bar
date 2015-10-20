@@ -2,21 +2,23 @@ let dom = require('./util/dom');
 
 class Instance {
   constructor(element) {
+    var sliderWidth = 10;
     var $content = element.firstElementChild;
-    console.log($content.scrollHeight);
-    console.log($content.clientHeight);
 
-    if ($content.scrollHeight > $content.clientHeight) {
-      var $railY = dom.createElement('<div class="fo-scrollbar-rail-y"></div>');
-      dom.appendTo($railY, element);
+    var $railY = dom.createElement('<div class="fo-scrollbar-rail-y"></div>');
+    dom.appendTo($railY, element);
 
-      var $sliderY = dom.createElement('<div class="fo-scrollbar-slider-y"></div>');
-      dom.appendTo($sliderY, element);
-    }
+    var $sliderY = dom.createElement('<div class="fo-scrollbar-slider-y"></div>');
+    dom.appendTo($sliderY, element);
+
+    // var paddingRight = dom.css(element, 'paddingRight');
+    // var paddingRightInt = parseInt(paddingRight, 10);
+    // var newPaddingRight = (paddingRightInt + sliderWidth).toString() + 'px';
+    // dom.css(element, 'paddingRight', newPaddingRight);
 
 
-    this.ratioX = element.clientWidth / element.scrollWidth;
-    this.ratioY = element.clientHeight / element.scrollHeight;
+    this.ratioX = $content.clientWidth / $content.scrollWidth;
+    this.ratioY = $content.clientHeight / $content.scrollHeight;
 
     this.container = {
       element: element,
@@ -26,7 +28,7 @@ class Instance {
 
     this.content = {
       width: 400,
-      height: element.scrollHeight
+      height: $content.scrollHeight
     };
 
     this.railX = {
@@ -37,7 +39,7 @@ class Instance {
     this.railY = {
       element: $railY,
       width: 400,
-      height: 1000
+      height: $content.clientHeight
     };
 
     this.sliderX = {

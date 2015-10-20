@@ -5,79 +5,24 @@ var event = require('../util/event');
 var dom = require('../util/dom');
 
 module.exports = function (i) {
-  var ratioY = i.ratioY;
+  var $content = i.container.element.firstElementChild;
 
-  // i.container.element.scrollTop = 100;
-  // i.railY.element.scrollTop = 0;
+  var ratioY = i.ratioY;
+  var railYHeight = i.railY.height;
 
   event.bind(i.railY.element, 'click', function (e) {
+    var originTopNumber = parseInt(dom.css(i.sliderY.element, 'top'), 10);
+    var newTopNumber = e.layerY - i.sliderY.height / 2;
 
-    var top = dom.css(i.sliderY.element, 'top');
-    var topInt = parseInt(top, 10);
+    if (newTopNumber < 1) return $content.scrollTop = 0;
 
-    var step = parseInt(i.container.height * ratioY, 10);
-    var stepContent = i.container.height;
+    if (newTopNumber + i.sliderY.height > i.railY.height) newTopNumber = i.railY.height - i.sliderY.height;
 
-    var scrollTop = i.container.element.scrollTop;
-
-    var topSlider = dom.css(i.railY.element, 'top');
-    var topSliderInt = parseInt(dom.css(i.railY.element, 'top'), 10);
-
-    // var time = 100;
-    var speed = 4;
-    var journey = i.container.height; // 400
-
-    var time = journey / speed;
-    console.log(time);
-    var ti;
-    var si;
-
-    if (e.layerY > topInt) {
-
-      var stop = topInt + step;
-      var id = setInterval(function () {
-        topInt = topInt + 2;
-        i.sliderY.element.style.top = topInt + 'px';
-
-        // if (topInt > stop) {
-        //   window.clearInterval(id)
-        // }
-      }, 1);
-
-      setTimeout(function () {
-        window.clearInterval(id);
-      }, time);
-
-      var idContainer = setInterval(function () {
-
-        topSliderInt = topSlider + 1;
-        i.railY.element.style.top = topSliderInt + 'px';
-
-        i.container.element.scrollTop = i.container.element.scrollTop + 20;
-        console.log(1);
-
-        // if (i.container.element.scrollTop > stepContent) {
-        //   window.clearInterval(idContainer)
-        // }
-      }, 1);
-
-      setTimeout(function () {
-        i.railY.element.style.top = '400px';
-        window.clearInterval(idContainer);
-      }, time);
-    } else {
-      var stop = topInt - step;
-      var id = setInterval(function () {
-        topInt--;
-        i.sliderY.element.style.top = topInt + 'px';
-
-        if (topInt < stop) {
-          window.clearInterval(id);
-        }
-      }, 1);
-    }
-    // console.log(topInt);
-    // console.log(parseInt(dom.css(i.sliderY.element, 'top'), 10));
+    var newTop = newTopNumber.toString() + 'px';
+    dom.css(i.sliderY.element, 'top', newTop);
+    var journey = newTopNumber - originTopNumber;
+    var scrollTop = journey / ratioY;
+    $content.scrollTop += scrollTop;
   });
 };
 
@@ -106,12 +51,15 @@ var mouseWheel = require('./event/mouse-wheel');
 var pressKeyboard = require('./event/press-keyboard');
 
 module.exports = function (element) {
-  var i = new instance(element);
+  var $content = element.firstElementChild;
+  if ($content.scrollHeight > $content.clientHeight) {
+    var i = new instance(element);
 
-  clickRail(i);
-  dragSlider(i);
-  mouseWheel(i);
-  pressKeyboard(i);
+    clickRail(i);
+    dragSlider(i);
+    mouseWheel(i);
+    pressKeyboard(i);
+  }
 };
 
 },{"./event/click-rail":1,"./event/drag-slider":2,"./event/mouse-wheel":3,"./event/press-keyboard":4,"./instance":6}],6:[function(require,module,exports){
@@ -127,20 +75,22 @@ var Instance = (function () {
   function Instance(element) {
     _classCallCheck(this, Instance);
 
+    var sliderWidth = 10;
     var $content = element.firstElementChild;
-    console.log($content.scrollHeight);
-    console.log($content.clientHeight);
 
-    if ($content.scrollHeight > $content.clientHeight) {
-      var $railY = dom.createElement('<div class="fo-scrollbar-rail-y"></div>');
-      dom.appendTo($railY, element);
+    var $railY = dom.createElement('<div class="fo-scrollbar-rail-y"></div>');
+    dom.appendTo($railY, element);
 
-      var $sliderY = dom.createElement('<div class="fo-scrollbar-slider-y"></div>');
-      dom.appendTo($sliderY, element);
-    }
+    var $sliderY = dom.createElement('<div class="fo-scrollbar-slider-y"></div>');
+    dom.appendTo($sliderY, element);
 
-    this.ratioX = element.clientWidth / element.scrollWidth;
-    this.ratioY = element.clientHeight / element.scrollHeight;
+    // var paddingRight = dom.css(element, 'paddingRight');
+    // var paddingRightInt = parseInt(paddingRight, 10);
+    // var newPaddingRight = (paddingRightInt + sliderWidth).toString() + 'px';
+    // dom.css(element, 'paddingRight', newPaddingRight);
+
+    this.ratioX = $content.clientWidth / $content.scrollWidth;
+    this.ratioY = $content.clientHeight / $content.scrollHeight;
 
     this.container = {
       element: element,
@@ -150,7 +100,7 @@ var Instance = (function () {
 
     this.content = {
       width: 400,
-      height: element.scrollHeight
+      height: $content.scrollHeight
     };
 
     this.railX = {
@@ -161,7 +111,7 @@ var Instance = (function () {
     this.railY = {
       element: $railY,
       width: 400,
-      height: 1000
+      height: $content.clientHeight
     };
 
     this.sliderX = {
