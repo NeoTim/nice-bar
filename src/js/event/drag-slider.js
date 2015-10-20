@@ -1,25 +1,29 @@
-var event = require('../util/event');
+let event = require('../util/event');
 var dom = require('../util/dom');
 
 module.exports = function(i) {
-  var currentPageY;
+  let currentPageY;
+  let currentHeight;
+  let currentHeightInt;
+  let differenceHeight = i.railY.height - i.sliderY.height;
 
   event.bind(i.sliderY.element, 'mousedown', function(e) {
     currentPageY = e.pageY;
+    currentHeight = dom.css(i.sliderY.element, 'top');
+    currentHeightInt = parseInt(dom.css(i.sliderY.element, 'top'), 10);
     event.bind(document, 'mousemove', mouseMoveHandler);
     event.once(document, 'mouseup', mouseUpHandler);
   });
 
   function mouseMoveHandler(e) {
-    var newTop = e.pageY - currentPageY;
+    let newTop = e.pageY - currentPageY + currentHeightInt;
     console.log(newTop);
 
-    if (newTop < 0) {
+    if (newTop <= 0) {
       newTop = 0
-    } else if (newTop >= 340) {
-      newTop = 340;
+    } else if (newTop >= differenceHeight) {
+      newTop = differenceHeight;
     }
-    
     dom.css(i.sliderY.element, 'top', newTop);
     e.stopPropagation();
     e.preventDefault();
