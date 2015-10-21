@@ -13,7 +13,7 @@ class Instance {
 
     var $content = element.firstElementChild;
     var $railY = createRailYElement();
-    var $sliderY = createSliderElement();
+    var $sliderY = createSliderYElement();
     dom.appendTo($railY, element);
 
     dom.appendTo($sliderY, element);
