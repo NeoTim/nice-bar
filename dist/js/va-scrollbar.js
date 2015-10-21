@@ -5,33 +5,32 @@ var event = require('../util/event');
 var dom = require('../util/dom');
 
 module.exports = function (i) {
-  var $content = i.container.element.firstElementChild;
 
-  var ratioY = i.ratioY;
-  var railYHeight = i.railY.height;
+  function updateSliderYGeometry(newTop) {
+    i.sliderY.deltaY = 0;
+    i.sliderY.top = newTop;
+  }
 
   function clickRailY(e) {
-    i.sliderY.deltaY = 0;
 
-    // update slider
     var originTop = dom.css(i.sliderY.element, 'top');
     var newTop = e.layerY - i.sliderY.height / 2;
 
     if (newTop < 0) {
       dom.css(i.sliderY.element, 'top', 0);
-      $content.scrollTop = 0;
-      return;
+      i.box.element.scrollTop = 0;
+    } else {
+      if (newTop + i.sliderY.height > i.railY.height) newTop = i.railY.height - i.sliderY.height;
+      dom.css(i.sliderY.element, 'top', newTop);
     }
 
-    if (newTop + i.sliderY.height > i.railY.height) newTop = i.railY.height - i.sliderY.height;
-
-    i.sliderY.initTop = newTop;
-    dom.css(i.sliderY.element, 'top', newTop);
-
-    // update content
+    // update box
     var journey = newTop - originTop;
-    var scrollTop = journey / ratioY;
-    $content.scrollTop += scrollTop;
+    var scrollTop = journey / i.ratioY;
+    i.box.element.scrollTop += scrollTop;
+
+    updateSliderYGeometry(newTop);
+    e.preventDefault();
   }
 
   event.bind(i.railY.element, 'click', clickRailY);
@@ -48,13 +47,12 @@ module.exports = function (i) {
   var originTop = undefined;
   var originScrollTop = undefined;
   var differenceHeight = i.railY.height - i.sliderY.height;
-  var $content = i.container.element.firstElementChild;
   var ratioY = i.ratioY;
 
   event.bind(i.sliderY.element, 'mousedown', function (e) {
     originPageY = e.pageY;
     originTop = dom.css(i.sliderY.element, 'top');
-    originScrollTop = $content.scrollTop;
+    originScrollTop = i.box.element.scrollTop;
 
     event.bind(document, 'mousemove', mouseMoveHandler);
     event.once(document, 'mouseup', mouseUpHandler);
@@ -73,14 +71,14 @@ module.exports = function (i) {
       newTop = differenceHeight;
     }
 
-    i.sliderY.initTop = newTop;
+    i.sliderY.top = newTop;
     dom.css(i.sliderY.element, 'top', newTop);
 
-    // udpate content
+    // udpate box
     var journey = newTop - originTop;
     var newScrollTop = journey / ratioY;
     newScrollTop += originScrollTop;
-    $content.scrollTop = newScrollTop;
+    i.box.element.scrollTop = newScrollTop;
 
     e.stopPropagation();
     e.preventDefault();
@@ -100,35 +98,34 @@ var event = require('../util/event');
 var dom = require('../util/dom');
 
 module.exports = function (i) {
-  var $content = i.container.element.firstElementChild;
   var differenceHeight = i.railY.height - i.sliderY.height;
 
-  event.bind($content, 'wheel', mouseWheelHandler);
+  event.bind(i.box.element, 'wheel', mouseWheelHandler);
 
   function mouseWheelHandler(e) {
 
     // update slider
     i.sliderY.deltaY += e.deltaY;
-    var newTop = i.sliderY.initTop + i.sliderY.deltaY * i.ratioY;
+    var newTop = i.sliderY.top + i.sliderY.deltaY * i.ratioY;
 
     if (newTop < 0) {
       newTop = 0;
-      i.sliderY.initTop = 0;
+      i.sliderY.top = 0;
       i.sliderY.deltaY = 0;
     }
 
     if (newTop > differenceHeight) {
       newTop = differenceHeight;
-      i.sliderY.deltaY = $content.scrollHeight - $content.clientHeight;
-      i.sliderY.initTop = 0;
+      i.sliderY.deltaY = i.box.element.scrollHeight - i.box.element.clientHeight;
+      i.sliderY.top = 0;
     }
 
     dom.css(i.sliderY.element, 'top', newTop);
 
-    //update content
+    //update box
     var newScrollTop = 0;
     newScrollTop += i.sliderY.deltaY;
-    $content.scrollTop = newScrollTop;
+    i.box.element.scrollTop = newScrollTop;
 
     e.preventDefault();
     e.stopPropagation();
@@ -177,24 +174,22 @@ var Instance = (function () {
     var sliderWidth = 10;
     var $content = element.firstElementChild;
 
-    var $railY = dom.createElement('<div class="fo-scrollbar-rail-y"></div>');
+    var $railY = dom.createElement('<div class="va-scrollbar-rail-y"></div>');
     dom.appendTo($railY, element);
 
-    var $sliderY = dom.createElement('<div class="fo-scrollbar-slider-y"></div>');
+    var $sliderY = dom.createElement('<div class="va-scrollbar-slider-y"></div>');
     dom.appendTo($sliderY, element);
 
     this.ratioX = $content.clientWidth / $content.scrollWidth;
     this.ratioY = $content.clientHeight / $content.scrollHeight;
 
-    this.container = {
-      element: element,
-      width: 400,
-      height: element.clientHeight
-    };
-
-    this.content = {
-      width: 400,
-      height: $content.scrollHeight
+    this.box = {
+      element: $content,
+      width: $content.clientWidth,
+      height: $content.clientHeight,
+      contentHeight: $content.scrollHeight,
+      containerHeight: $content.clientHeight,
+      d: ''
     };
 
     this.railX = {
@@ -214,16 +209,14 @@ var Instance = (function () {
     };
 
     this.sliderY = {
-      initTop: 0,
       deltaY: 0,
       element: $sliderY,
       top: 0,
       width: 40,
-      height: parseInt(this.container.height * this.container.height / this.content.height, 10)
+      height: this.box.containerHeight * this.box.containerHeight / this.box.contentHeight
     };
 
-    // setSliderXheight()
-    dom.css($sliderY, 'height', this.sliderY.height + 'px');
+    dom.css(this.sliderY.element, 'height', this.sliderY.height + 'px');
   }
 
   _createClass(Instance, [{
@@ -242,17 +235,17 @@ module.exports = Instance;
 'use strict';
 
 var init = require('./init');
-var foScrollbar = {
+var vaScrollbar = {
   init: init,
   update: 'update'
 };
 
 if (typeof define === 'function' && define.amd) {
-  define('fo-scrollbar', [], function () {
-    return foScrollbar;
+  define('va-scrollbar', [], function () {
+    return vaScrollbar;
   });
 } else {
-  window.foScrollbar = foScrollbar;
+  window.vaScrollbar = vaScrollbar;
 }
 
 },{"./init":5}],8:[function(require,module,exports){

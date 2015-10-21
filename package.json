@@ -1,5 +1,5 @@
 {
-  "name": "fo-scrollbar",
+  "name": "va-scrollbar",
   "version": "1.0.0",
   "description": "A beautiful scrollbar.",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/forsigner/fo-scrollbar.git"
+    "url": "git+https://github.com/forsigner/va-scrollbar.git"
   },
   "keywords": [
     "scrollbar"
@@ -16,9 +16,9 @@
   "author": "forsigner",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/forsigner/fo-scrollbar/issues"
+    "url": "https://github.com/forsigner/va-scrollbar/issues"
   },
-  "homepage": "https://github.com/forsigner/fo-scrollbar#readme",
+  "homepage": "https://github.com/forsigner/va-scrollbar#readme",
   "devDependencies": {
     "babel-eslint": "^4.1.3",
     "babelify": "^6.3.0",

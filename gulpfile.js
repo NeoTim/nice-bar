@@ -20,7 +20,7 @@ gulp.task('js', function() {
     .transform(babelify)
     .bundle()
     .pipe(source('main.js'))
-    .pipe(rename('fo-scrollbar.js'))
+    .pipe(rename('va-scrollbar.js'))
     .pipe(gulp.dest('./dist/js'));
 });
 

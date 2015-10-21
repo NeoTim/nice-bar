@@ -1,15 +1,15 @@
 'use strict';
 
 let init = require('./init');
-let foScrollbar = {
+let vaScrollbar = {
   init: init,
   update: 'update'
 };
 
 if (typeof define === 'function' && define.amd) {
-  define('fo-scrollbar', [], function() {
-    return foScrollbar;
+  define('va-scrollbar', [], function() {
+    return vaScrollbar;
   });
 } else {
-  window.foScrollbar = foScrollbar;
+  window.vaScrollbar = vaScrollbar;
 }

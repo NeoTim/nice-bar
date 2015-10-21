@@ -9,7 +9,6 @@ module.exports = function(element) {
   if ($content.scrollHeight > $content.clientHeight) {
     let i = new instance(element);
 
-
     clickRail(i);
     dragSlider(i);
     mouseWheel(i);

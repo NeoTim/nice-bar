@@ -5,30 +5,22 @@ class Instance {
     var sliderWidth = 10;
     var $content = element.firstElementChild;
 
-    var $railY = dom.createElement('<div class="fo-scrollbar-rail-y"></div>');
+    var $railY = dom.createElement('<div class="va-scrollbar-rail-y"></div>');
     dom.appendTo($railY, element);
 
-    var $sliderY = dom.createElement('<div class="fo-scrollbar-slider-y"></div>');
+    var $sliderY = dom.createElement('<div class="va-scrollbar-slider-y"></div>');
     dom.appendTo($sliderY, element);
-
-    // var paddingRight = dom.css(element, 'paddingRight');
-    // var paddingRightInt = parseInt(paddingRight, 10);
-    // var newPaddingRight = (paddingRightInt + sliderWidth).toString() + 'px';
-    // dom.css(element, 'paddingRight', newPaddingRight);
-
 
     this.ratioX = $content.clientWidth / $content.scrollWidth;
     this.ratioY = $content.clientHeight / $content.scrollHeight;
 
-    this.container = {
-      element: element,
-      width: 400,
-      height: element.clientHeight
-    };
-
-    this.content = {
-      width: 400,
-      height: $content.scrollHeight
+    this.box = {
+      element: $content,
+      width: $content.clientWidth,
+      height: $content.clientHeight,
+      contentHeight: $content.scrollHeight,
+      containerHeight: $content.clientHeight,
+      d: ''
     };
 
     this.railX = {
@@ -48,14 +40,14 @@ class Instance {
     };
 
     this.sliderY = {
+      deltaY: 0,
       element: $sliderY,
+      top: 0,
       width: 40,
-      height: parseInt(this.container.height * this.container.height / this.content.height, 10)
+      height: this.box.containerHeight * this.box.containerHeight / this.box.contentHeight
     };
 
-
-    // setSliderXheight()
-    dom.css($sliderY, 'height', this.sliderY.height + 'px');
+    dom.css(this.sliderY.element, 'height', this.sliderY.height + 'px');
 
   }
 
