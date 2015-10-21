@@ -171,13 +171,19 @@ var Instance = (function () {
   function Instance(element) {
     _classCallCheck(this, Instance);
 
-    var sliderWidth = 10;
-    var $content = element.firstElementChild;
+    function createSliderYElement() {
+      return dom.createElement('<div class="va-scrollbar-slider-y"></div>');
+    }
 
-    var $railY = dom.createElement('<div class="va-scrollbar-rail-y"></div>');
+    function createRailYElement() {
+      return dom.createElement('<div class="va-scrollbar-rail-y"></div>');
+    }
+
+    var $content = element.firstElementChild;
+    var $railY = createRailYElement();
+    var $sliderY = createSliderElement();
     dom.appendTo($railY, element);
 
-    var $sliderY = dom.createElement('<div class="va-scrollbar-slider-y"></div>');
     dom.appendTo($sliderY, element);
 
     this.ratioX = $content.clientWidth / $content.scrollWidth;
