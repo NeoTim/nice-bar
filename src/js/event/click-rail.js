@@ -34,6 +34,7 @@ module.exports = function(i) {
     let journey = newTop - originTop;
     let scrollTop = journey / i.ratioY;
     i.content.element.scrollTop += scrollTop;
+    i.content.scrollTop = i.content.element.scrollTop;
   }
 
   /**
@@ -43,14 +44,6 @@ module.exports = function(i) {
    */
   function updateSlider(newTop) {
     dom.css(i.sliderY.element, 'top', newTop);
-  }
-
-  /**
-   * updateSliderYGeometry
-   * @param  {number} newTop slider's new top
-   * @return null
-   */
-  function updateSliderYGeometry(newTop) {
     i.sliderY.deltaY = 0;
     i.sliderY.top = newTop;
   }
@@ -66,7 +59,6 @@ module.exports = function(i) {
 
     updateSlider(newTop);
     updateContent(newTop, originTop);
-    updateSliderYGeometry(newTop);
 
     e.preventDefault();
   }

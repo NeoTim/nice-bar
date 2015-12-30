@@ -6,42 +6,65 @@ var dom = require('../util/dom');
 
 module.exports = function (i) {
 
-  function getNewTop(layerY) {
-    var newTop = layerY - i.sliderY.height / 2;
-    if (newTop < 0) {
+  /**
+   * get slider's new top
+   * @param  {number} offsetY  a property from mouseEvent
+   * @return {number} newTop slider's new top
+   */
+  function getNewTop(offsetY) {
+    var newTop = undefined;
+
+    if (offsetY < i.sliderY.height / 2) {
       newTop = 0;
-    } else if (newTop + i.sliderY.height > i.railY.height) {
+    } else if (offsetY > i.railY.height - i.sliderY.height / 2) {
       newTop = i.railY.height - i.sliderY.height;
+    } else {
+      newTop = offsetY - i.sliderY.height / 2;
     }
 
     return newTop;
   }
 
-  function updateBox(newTop, originTop) {
+  /**
+   * update content box scrollTop
+   * @param  {number} newTop      slider's newTop
+   * @param  {number} originTop   slider's originTop
+   * @return null
+   */
+  function updateContent(newTop, originTop) {
     var journey = newTop - originTop;
     var scrollTop = journey / i.ratioY;
-    i.box.element.scrollTop += scrollTop;
+    i.content.element.scrollTop += scrollTop;
+    i.content.scrollTop = i.content.element.scrollTop;
   }
 
+  /**
+   * update slider's css top
+   * @param  {number} newTop slider's new top
+   * @return null
+   */
   function updateSlider(newTop) {
     dom.css(i.sliderY.element, 'top', newTop);
-  }
-
-  function updateSliderYGeometry(newTop) {
     i.sliderY.deltaY = 0;
     i.sliderY.top = newTop;
   }
 
-  function clickRailY(e) {
+  /**
+   * clickRailYHandler
+   * @param  {object} e  evnet
+   * @return null
+   */
+  function clickRailYHandler(e) {
     var originTop = dom.css(i.sliderY.element, 'top');
-    var newTop = getNewTop(e.layerY);
+    var newTop = getNewTop(e.offsetY);
+
     updateSlider(newTop);
-    updateBox(newTop, originTop);
-    updateSliderYGeometry(newTop);
+    updateContent(newTop, originTop);
+
     e.preventDefault();
   }
 
-  event.bind(i.railY.element, 'click', clickRailY);
+  event.bind(i.railY.element, 'click', clickRailYHandler);
 };
 
 },{"../util/dom":8,"../util/event":9}],2:[function(require,module,exports){
@@ -60,12 +83,17 @@ module.exports = function (i) {
   event.bind(i.sliderY.element, 'mousedown', function (e) {
     originPageY = e.pageY;
     originTop = dom.css(i.sliderY.element, 'top');
-    originScrollTop = i.box.element.scrollTop;
+    originScrollTop = i.content.element.scrollTop;
 
     event.bind(document, 'mousemove', mouseMoveHandler);
     event.once(document, 'mouseup', mouseUpHandler);
   });
 
+  /**
+   * mouseMoveHandler
+   * @param  {object} e event
+   * @return null
+   */
   function mouseMoveHandler(e) {
 
     i.sliderY.deltaY = 0;
@@ -82,19 +110,17 @@ module.exports = function (i) {
     i.sliderY.top = newTop;
     dom.css(i.sliderY.element, 'top', newTop);
 
-    // udpate box
+    // udpate content
     var journey = newTop - originTop;
     var newScrollTop = journey / ratioY;
     newScrollTop += originScrollTop;
-    i.box.element.scrollTop = newScrollTop;
+    i.content.element.scrollTop = newScrollTop;
 
     e.stopPropagation();
     e.preventDefault();
   }
 
   function mouseUpHandler() {
-    // console.log(2222);
-    // todo
     event.unbind(document, 'mousemove', mouseMoveHandler);
   }
 };
@@ -106,44 +132,46 @@ var event = require('../util/event');
 var dom = require('../util/dom');
 
 module.exports = function (i) {
-  var differenceHeight = i.railY.height - i.sliderY.height;
-
-  event.bind(i.box.element, 'wheel', mouseWheelHandler);
+  var sumDeltaY = 0;
 
   function mouseWheelHandler(e) {
-
     // update slider
-    i.sliderY.deltaY += e.deltaY;
-    var newTop = i.sliderY.top + i.sliderY.deltaY * i.ratioY;
+    sumDeltaY += e.deltaY;
+    var newTop = 0;
 
-    if (newTop < 0) {
+    if (sumDeltaY * i.ratioY < 0) {
       newTop = 0;
-      i.sliderY.top = 0;
       i.sliderY.deltaY = 0;
-    }
-
-    if (newTop > differenceHeight) {
-      newTop = differenceHeight;
-      i.sliderY.deltaY = i.box.element.scrollHeight - i.box.element.clientHeight;
-      i.sliderY.top = 0;
+      sumDeltaY = 0;
+    } else if (sumDeltaY * i.ratioY > i.railY.height - i.sliderY.height) {
+      newTop = i.railY.height - i.sliderY.height;
+      sumDeltaY = i.content.element.scrollHeight - i.content.element.clientHeight;
+    } else {
+      newTop = sumDeltaY * i.ratioY;
     }
 
     dom.css(i.sliderY.element, 'top', newTop);
 
-    //update box
+    // update box
     var newScrollTop = 0;
-    newScrollTop += i.sliderY.deltaY;
-    i.box.element.scrollTop = newScrollTop;
+    newScrollTop += sumDeltaY;
+    i.content.element.scrollTop = newScrollTop;
+
+    // i.content.element.scrollTop = i.content.element.scrollTop +  sumDeltaY;
 
     e.preventDefault();
     e.stopPropagation();
   }
+
+  event.bind(i.content.element, 'wheel', mouseWheelHandler);
 };
 
 },{"../util/dom":8,"../util/event":9}],4:[function(require,module,exports){
-"use strict";
+'use strict';
 
-module.exports = function (i) {};
+module.exports = function (i) {
+  // todo
+};
 
 },{}],5:[function(require,module,exports){
 'use strict';
@@ -190,26 +218,27 @@ var Instance = (function () {
     var $content = element.firstElementChild;
     var $railY = createRailYElement();
     var $sliderY = createSliderYElement();
-    dom.appendTo($railY, element);
 
+    dom.appendTo($railY, element);
     dom.appendTo($sliderY, element);
 
-    this.ratioX = $content.clientWidth / $content.scrollWidth;
-    this.ratioY = $content.clientHeight / $content.scrollHeight;
+    this.container = {
+      width: $content.clientWidth,
+      height: $content.clientHeight
+    };
 
-    this.box = {
+    this.content = {
+      deltaY: 0, // 增量
       element: $content,
       width: $content.clientWidth,
-      height: $content.clientHeight,
-      contentHeight: $content.scrollHeight,
-      containerHeight: $content.clientHeight,
-      d: ''
+      height: $content.scrollHeight,
+      scrollTop: $content.scrollTop
     };
 
-    this.railX = {
-      width: 400,
-      height: ''
-    };
+    this.ratioX = this.container.width / this.content.width;
+    this.ratioY = this.container.height / this.content.height;
+
+    this.railX = { width: 400, height: '' };
 
     this.railY = {
       element: $railY,
@@ -217,17 +246,14 @@ var Instance = (function () {
       height: $content.clientHeight
     };
 
-    this.sliderX = {
-      width: 400,
-      height: ''
-    };
+    this.sliderX = { width: 400, height: '' };
 
     this.sliderY = {
-      deltaY: 0,
+      deltaY: 0, // 增量
       element: $sliderY,
       top: 0,
       width: 40,
-      height: this.box.containerHeight * this.box.containerHeight / this.box.contentHeight
+      height: this.container.height * this.ratioY
     };
 
     dom.css(this.sliderY.element, 'height', this.sliderY.height + 'px');

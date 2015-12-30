@@ -26,14 +26,15 @@ class Instance {
     };
 
     this.content = {
+      deltaY: 0, // 增量
       element: $content,
       width: $content.clientWidth,
       height: $content.scrollHeight,
+      scrollTop: $content.scrollTop
     };
 
     this.ratioX = this.container.width / this.content.width;
     this.ratioY = this.container.height / this.content.height;
-    console.log(this.ratioY);
 
     this.railX = {width: 400, height: ''};
 
