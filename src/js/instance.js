@@ -64,5 +64,4 @@ class Instance {
 
 }
 
-
 module.exports = Instance;
