@@ -4,7 +4,7 @@ let dom = require('../util/dom');
 module.exports = function(i) {
   let differenceHeight = i.railY.height - i.sliderY.height;
 
-  event.bind(i.box.element, 'wheel', mouseWheelHandler);
+  event.bind(i.content.element, 'wheel', mouseWheelHandler);
 
   function mouseWheelHandler(e) {
 
@@ -20,7 +20,7 @@ module.exports = function(i) {
 
     if (newTop > differenceHeight) {
       newTop = differenceHeight;
-      i.sliderY.deltaY = i.box.element.scrollHeight - i.box.element.clientHeight;
+      i.sliderY.deltaY = i.content.element.scrollHeight - i.content.element.clientHeight;
       i.sliderY.top = 0;
     }
 
@@ -29,7 +29,7 @@ module.exports = function(i) {
     //update box
     let newScrollTop = 0;
     newScrollTop += i.sliderY.deltaY;
-    i.box.element.scrollTop = newScrollTop;
+    i.content.element.scrollTop = newScrollTop;
 
     e.preventDefault();
     e.stopPropagation();
