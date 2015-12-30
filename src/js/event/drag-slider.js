@@ -45,6 +45,7 @@ module.exports = function(i) {
     let newScrollTop = journey / ratioY;
     newScrollTop += originScrollTop;
     i.content.element.scrollTop = newScrollTop;
+    i.sumDeltaY = i.content.element.scrollTop;
 
     e.stopPropagation();
     e.preventDefault();

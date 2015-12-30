@@ -4,7 +4,6 @@ let event = require('../util/event');
 let dom = require('../util/dom');
 
 module.exports = function(i) {
-  i.sumDeltaY = 0;
 
   function mouseWheelHandler(e) {
     // update slider

@@ -34,7 +34,7 @@ module.exports = function(i) {
     let journey = newTop - originTop;
     let scrollTop = journey / i.ratioY;
     i.content.element.scrollTop += scrollTop;
-    i.content.scrollTop = i.content.element.scrollTop;
+    i.sumDeltaY = i.content.element.scrollTop;
   }
 
   /**

@@ -35,7 +35,7 @@ module.exports = function (i) {
     var journey = newTop - originTop;
     var scrollTop = journey / i.ratioY;
     i.content.element.scrollTop += scrollTop;
-    i.content.scrollTop = i.content.element.scrollTop;
+    i.sumDeltaY = i.content.element.scrollTop;
   }
 
   /**
@@ -115,6 +115,7 @@ module.exports = function (i) {
     var newScrollTop = journey / ratioY;
     newScrollTop += originScrollTop;
     i.content.element.scrollTop = newScrollTop;
+    i.sumDeltaY = i.content.element.scrollTop;
 
     e.stopPropagation();
     e.preventDefault();
@@ -132,7 +133,6 @@ var event = require('../util/event');
 var dom = require('../util/dom');
 
 module.exports = function (i) {
-  i.sumDeltaY = 0;
 
   function mouseWheelHandler(e) {
     // update slider
