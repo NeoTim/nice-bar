@@ -1,5 +1,5 @@
 let event = require('../util/event');
-var dom = require('../util/dom');
+let dom = require('../util/dom');
 
 module.exports = function(i) {
   let originPageY;
@@ -25,7 +25,7 @@ module.exports = function(i) {
     let newTop = e.pageY - originPageY + originTop;
 
     if (newTop <= 0) {
-      newTop = 0
+      newTop = 0;
     } else if (newTop >= differenceHeight) {
       newTop = differenceHeight;
     }
@@ -36,7 +36,7 @@ module.exports = function(i) {
     // udpate box
     let journey = newTop - originTop;
     let newScrollTop = journey / ratioY;
-    newScrollTop += originScrollTop
+    newScrollTop += originScrollTop;
     i.box.element.scrollTop = newScrollTop;
 
     e.stopPropagation();
@@ -49,5 +49,4 @@ module.exports = function(i) {
     event.unbind(document, 'mousemove', mouseMoveHandler);
   }
 
-
-}
+};

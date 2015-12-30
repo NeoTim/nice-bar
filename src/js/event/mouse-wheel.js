@@ -1,5 +1,5 @@
 let event = require('../util/event');
-var dom = require('../util/dom');
+let dom = require('../util/dom');
 
 module.exports = function(i) {
   let differenceHeight = i.railY.height - i.sliderY.height;
@@ -15,7 +15,7 @@ module.exports = function(i) {
     if (newTop < 0) {
       newTop = 0;
       i.sliderY.top = 0;
-      i.sliderY.deltaY = 0
+      i.sliderY.deltaY = 0;
     }
 
     if (newTop > differenceHeight) {
@@ -27,13 +27,12 @@ module.exports = function(i) {
     dom.css(i.sliderY.element, 'top', newTop);
 
     //update box
-    var newScrollTop = 0;
+    let newScrollTop = 0;
     newScrollTop += i.sliderY.deltaY;
     i.box.element.scrollTop = newScrollTop;
-
 
     e.preventDefault();
     e.stopPropagation();
   }
 
-}
+};

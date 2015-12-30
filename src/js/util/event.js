@@ -1,21 +1,23 @@
-var event = {};
+'use strict';
 
+let event = {
+  bind(element, name, listener) {
+    element.addEventListener(name, listener, false);
+  },
 
-event.bind = function(element, name, listener) {
-  element.addEventListener(name, listener, false);
-};
+  unbind(element, name, listener) {
+    element.removeEventListener(name, listener, false);
+  },
 
-event.unbind = function(element, name, listener) {
-  element.removeEventListener(name, listener, false);
-};
+  once(element, name, listener) {
+    let that = this;
+    let once = function(e) {
+      that.unbind(element, name, once);
+      listener(e);
+    };
 
-event.once = function(element, name, listener) {
-  var that = this;
-  var once = function(e) {
-    that.unbind(element, name, once);
-    listener(e);
+    that.bind(element, name, once);
   }
-  that.bind(element, name, once);
 };
 
 module.exports = event;

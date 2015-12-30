@@ -5,7 +5,7 @@ let mouseWheel = require('./event/mouse-wheel');
 let pressKeyboard = require('./event/press-keyboard');
 
 module.exports = function(element) {
-  var $content = element.firstElementChild;
+  let $content = element.firstElementChild;
   if ($content.scrollHeight > $content.clientHeight) {
     let i = new Instance(element);
 

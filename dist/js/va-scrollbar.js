@@ -13,6 +13,7 @@ module.exports = function (i) {
     } else if (newTop + i.sliderY.height > i.railY.height) {
       newTop = i.railY.height - i.sliderY.height;
     }
+
     return newTop;
   }
 
@@ -147,7 +148,7 @@ module.exports = function (i) {};
 },{}],5:[function(require,module,exports){
 'use strict';
 
-var instance = require('./instance');
+var Instance = require('./instance');
 var clickRail = require('./event/click-rail');
 var dragSlider = require('./event/drag-slider');
 var mouseWheel = require('./event/mouse-wheel');
@@ -156,7 +157,7 @@ var pressKeyboard = require('./event/press-keyboard');
 module.exports = function (element) {
   var $content = element.firstElementChild;
   if ($content.scrollHeight > $content.clientHeight) {
-    var i = new instance(element);
+    var i = new Instance(element);
 
     clickRail(i);
     dragSlider(i);
@@ -264,18 +265,20 @@ if (typeof define === 'function' && define.amd) {
 },{"./init":5}],8:[function(require,module,exports){
 'use strict';
 
-var dom = {};
-
 function getCss(element, styleName) {
   var styleValue = window.getComputedStyle(element)[styleName];
   if (parseInt(styleValue, 10) || parseInt(styleValue, 10) === 0) {
     styleValue = parseInt(styleValue, 10);
   }
+
   return styleValue;
 }
 
 function setSingleCss(element, styleName, styleValue) {
-  if (typeof styleValue === 'number') styleValue = styleValue.toString() + 'px';
+  if (typeof styleValue === 'number') {
+    styleValue = styleValue.toString() + 'px';
+  }
+
   element.style[styleName] = styleValue;
   return element;
 }
@@ -283,75 +286,85 @@ function setSingleCss(element, styleName, styleValue) {
 function setMultiCss(element, obj) {
   for (var key in obj) {
     var styleValue = obj[key];
-    if (typeof styleValue === 'number') styleValue = styleValue.toString() + 'px';
+    if (typeof styleValue === 'number') {
+      styleValue = styleValue.toString() + 'px';
+    }
+
     element.style[styleName] = styleValue;
   }
+
   return element;
 }
 
-dom.createElement = function (string) {
-  var element = document.createElement('div');
-  element.innerHTML = string;
-  return element.firstElementChild;
-};
+var dom = {
+  createElement: function createElement(string) {
+    var element = document.createElement('div');
+    element.innerHTML = string;
+    return element.firstElementChild;
+  },
 
-dom.appendTo = function (child, parent) {
-  parent.appendChild(child);
-};
+  appendTo: function appendTo(child, parent) {
+    parent.appendChild(child);
+  },
 
-dom.addClass = function (element, className) {
-  var classes = element.className.split(' ');
-  if (classes.indexOf(className) < 0) {
-    classes.push(className);
-  }
-  element.className = classes.join(' ');
-  return element;
-};
+  addClass: function addClass(element, className) {
+    var classes = element.className.split(' ');
+    if (classes.indexOf(className) < 0) {
+      classes.push(className);
+    }
 
-dom.removeClass = function (element, className) {
-  var classes = element.className.split(' ');
-  var index = classes.indexOf(className);
-  if (indexOf > -1) {
-    classes.splice(index, 1);
-  }
-  element.className = classes.join(' ');
-  return element;
-};
+    element.className = classes.join(' ');
+    return element;
+  },
 
-dom.css = function (element, styleNameOrObject, styleValue) {
-  if (typeof styleNameOrObject === 'object') {
-    return setMultiCss(element, styleNameOrObject);
-  } else {
-    if (typeof styleValue === 'undefined') {
-      return getCss(element, styleNameOrObject);
+  removeClass: function removeClass(element, className) {
+    var classes = element.className.split(' ');
+    var index = classes.indexOf(className);
+    if (indexOf > -1) {
+      classes.splice(index, 1);
+    }
+
+    element.className = classes.join(' ');
+    return element;
+  },
+
+  css: function css(element, styleNameOrObject, styleValue) {
+    if (typeof styleNameOrObject === 'object') {
+      return setMultiCss(element, styleNameOrObject);
     } else {
-      return setSingleCss(element, styleNameOrObject, styleValue);
+      if (typeof styleValue === 'undefined') {
+        return getCss(element, styleNameOrObject);
+      } else {
+        return setSingleCss(element, styleNameOrObject, styleValue);
+      }
     }
   }
+
 };
 
 module.exports = dom;
 
 },{}],9:[function(require,module,exports){
-"use strict";
+'use strict';
 
-var event = {};
+var event = {
+  bind: function bind(element, name, listener) {
+    element.addEventListener(name, listener, false);
+  },
 
-event.bind = function (element, name, listener) {
-  element.addEventListener(name, listener, false);
-};
+  unbind: function unbind(element, name, listener) {
+    element.removeEventListener(name, listener, false);
+  },
 
-event.unbind = function (element, name, listener) {
-  element.removeEventListener(name, listener, false);
-};
+  once: function once(element, name, listener) {
+    var that = this;
+    var once = function once(e) {
+      that.unbind(element, name, once);
+      listener(e);
+    };
 
-event.once = function (element, name, listener) {
-  var that = this;
-  var once = function once(e) {
-    that.unbind(element, name, once);
-    listener(e);
-  };
-  that.bind(element, name, once);
+    that.bind(element, name, once);
+  }
 };
 
 module.exports = event;

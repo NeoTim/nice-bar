@@ -1,3 +1,5 @@
+'use strict';
+
 let event = require('../util/event');
 let dom = require('../util/dom');
 
@@ -10,9 +12,9 @@ module.exports = function(i) {
     } else if (newTop + i.sliderY.height > i.railY.height) {
       newTop = i.railY.height - i.sliderY.height;
     }
+
     return newTop;
   }
-
 
   function updateBox(newTop, originTop) {
     let journey = newTop - originTop;
@@ -32,12 +34,11 @@ module.exports = function(i) {
   function clickRailY(e) {
     let originTop = dom.css(i.sliderY.element, 'top');
     let newTop = getNewTop(e.layerY);
-    updateSlider(newTop)
+    updateSlider(newTop);
     updateBox(newTop, originTop);
     updateSliderYGeometry(newTop);
     e.preventDefault();
   }
 
   event.bind(i.railY.element, 'click', clickRailY);
-
-}
+};

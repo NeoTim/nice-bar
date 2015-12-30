@@ -11,9 +11,9 @@ class Instance {
       return dom.createElement('<div class="va-scrollbar-rail-y"></div>');
     }
 
-    var $content = element.firstElementChild;
-    var $railY = createRailYElement();
-    var $sliderY = createSliderYElement();
+    let $content = element.firstElementChild;
+    let $railY = createRailYElement();
+    let $sliderY = createSliderYElement();
     dom.appendTo($railY, element);
 
     dom.appendTo($sliderY, element);
