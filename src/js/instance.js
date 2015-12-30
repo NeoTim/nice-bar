@@ -20,6 +20,8 @@ class Instance {
     dom.appendTo($railY, element);
     dom.appendTo($sliderY, element);
 
+    this.sumDeltaY = 0;
+
     this.container = {
       width: $content.clientWidth,
       height: $content.clientHeight
