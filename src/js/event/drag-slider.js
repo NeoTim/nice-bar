@@ -11,12 +11,17 @@ module.exports = function(i) {
   event.bind(i.sliderY.element, 'mousedown', function(e) {
     originPageY = e.pageY;
     originTop = dom.css(i.sliderY.element, 'top');
-    originScrollTop = i.box.element.scrollTop;
+    originScrollTop = i.content.element.scrollTop;
 
     event.bind(document, 'mousemove', mouseMoveHandler);
     event.once(document, 'mouseup', mouseUpHandler);
   });
 
+  /**
+   * mouseMoveHandler
+   * @param  {object} e event
+   * @return null
+   */
   function mouseMoveHandler(e) {
 
     i.sliderY.deltaY = 0;
@@ -33,20 +38,17 @@ module.exports = function(i) {
     i.sliderY.top = newTop;
     dom.css(i.sliderY.element, 'top', newTop);
 
-    // udpate box
+    // udpate content
     let journey = newTop - originTop;
     let newScrollTop = journey / ratioY;
     newScrollTop += originScrollTop;
-    i.box.element.scrollTop = newScrollTop;
+    i.content.element.scrollTop = newScrollTop;
 
     e.stopPropagation();
     e.preventDefault();
   }
 
   function mouseUpHandler() {
-    // console.log(2222);
-    // todo
     event.unbind(document, 'mousemove', mouseMoveHandler);
   }
-
 };
