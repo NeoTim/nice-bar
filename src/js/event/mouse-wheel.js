@@ -1,3 +1,5 @@
+'use strict';
+
 let event = require('../util/event');
 let dom = require('../util/dom');
 
@@ -26,7 +28,7 @@ module.exports = function(i) {
 
     dom.css(i.sliderY.element, 'top', newTop);
 
-    //update box
+    // update box
     let newScrollTop = 0;
     newScrollTop += i.sliderY.deltaY;
     i.content.element.scrollTop = newScrollTop;

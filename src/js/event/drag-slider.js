@@ -1,3 +1,5 @@
+'use strict';
+
 let event = require('../util/event');
 let dom = require('../util/dom');
 
