@@ -1,3 +1,5 @@
+'use strict';
+
 let Instance = require('./instance');
 let clickRail = require('./event/click-rail');
 let dragSlider = require('./event/drag-slider');
