@@ -1,3 +1,5 @@
+'use strict';
+
 let dom = require('./util/dom');
 
 class Instance {
@@ -14,26 +16,26 @@ class Instance {
     let $content = element.firstElementChild;
     let $railY = createRailYElement();
     let $sliderY = createSliderYElement();
-    dom.appendTo($railY, element);
 
+    dom.appendTo($railY, element);
     dom.appendTo($sliderY, element);
 
-    this.ratioX = $content.clientWidth / $content.scrollWidth;
-    this.ratioY = $content.clientHeight / $content.scrollHeight;
+    this.container = {
+      width: $content.clientWidth,
+      height: $content.clientHeight
+    };
 
-    this.box = {
+    this.content = {
       element: $content,
       width: $content.clientWidth,
-      height: $content.clientHeight,
-      contentHeight: $content.scrollHeight,
-      containerHeight: $content.clientHeight,
-      d: ''
+      height: $content.scrollHeight,
     };
 
-    this.railX = {
-      width: 400,
-      height: ''
-    };
+    this.ratioX = this.container.width / this.content.width;
+    this.ratioY = this.container.height / this.content.height;
+    console.log(this.ratioY);
+
+    this.railX = {width: 400, height: ''};
 
     this.railY = {
       element: $railY,
@@ -41,21 +43,17 @@ class Instance {
       height: $content.clientHeight
     };
 
-    this.sliderX = {
-      width: 400,
-      height: ''
-    };
+    this.sliderX = {width: 400, height: ''};
 
     this.sliderY = {
-      deltaY: 0,
+      deltaY: 0, // 增量
       element: $sliderY,
       top: 0,
       width: 40,
-      height: this.box.containerHeight * this.box.containerHeight / this.box.contentHeight
+      height: this.container.height * this.ratioY
     };
 
     dom.css(this.sliderY.element, 'height', this.sliderY.height + 'px');
-
   }
 
   toString() {
