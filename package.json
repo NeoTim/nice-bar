@@ -25,6 +25,10 @@
     "browserify": "^11.2.0",
     "eslint": "^1.7.1",
     "gulp-rename": "^1.2.2",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-source-stream": "^1.1.0",
+    "babel-eslint": "^4.1.6",
+    "eslint": "^1.10.3"
+  },
+  "dependencies": {
   }
 }
