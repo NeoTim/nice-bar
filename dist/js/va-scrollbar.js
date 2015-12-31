@@ -1,10 +1,11 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
-var event = require('../util/event');
-var dom = require('../util/dom');
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-module.exports = function (i) {
+exports.default = function (i) {
 
   /**
    * get slider's new top
@@ -44,7 +45,7 @@ module.exports = function (i) {
    * @return null
    */
   function updateSlider(newTop) {
-    dom.css(i.sliderY.element, 'top', newTop);
+    _dom2.default.css(i.sliderY.element, 'top', newTop);
     i.sliderY.deltaY = 0;
     i.sliderY.top = newTop;
   }
@@ -55,7 +56,7 @@ module.exports = function (i) {
    * @return null
    */
   function clickRailYHandler(e) {
-    var originTop = dom.css(i.sliderY.element, 'top');
+    var originTop = _dom2.default.css(i.sliderY.element, 'top');
     var newTop = getNewTop(e.offsetY);
 
     updateSlider(newTop);
@@ -64,29 +65,42 @@ module.exports = function (i) {
     e.preventDefault();
   }
 
-  event.bind(i.railY.element, 'click', clickRailYHandler);
+  _event2.default.bind(i.railY.element, 'click', clickRailYHandler);
 };
+
+var _event = require('../util/event');
+
+var _event2 = _interopRequireDefault(_event);
+
+var _dom = require('../util/dom');
+
+var _dom2 = _interopRequireDefault(_dom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+;
 
 },{"../util/dom":8,"../util/event":9}],2:[function(require,module,exports){
 'use strict';
 
-var event = require('../util/event');
-var dom = require('../util/dom');
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-module.exports = function (i) {
+exports.default = function (i) {
   var originPageY = undefined;
   var originTop = undefined;
   var originScrollTop = undefined;
   var differenceHeight = i.railY.height - i.sliderY.height;
   var ratioY = i.ratioY;
 
-  event.bind(i.sliderY.element, 'mousedown', function (e) {
+  _event2.default.bind(i.sliderY.element, 'mousedown', function (e) {
     originPageY = e.pageY;
-    originTop = dom.css(i.sliderY.element, 'top');
+    originTop = _dom2.default.css(i.sliderY.element, 'top');
     originScrollTop = i.content.element.scrollTop;
 
-    event.bind(document, 'mousemove', mouseMoveHandler);
-    event.once(document, 'mouseup', mouseUpHandler);
+    _event2.default.bind(document, 'mousemove', mouseMoveHandler);
+    _event2.default.once(document, 'mouseup', mouseUpHandler);
   });
 
   /**
@@ -108,7 +122,7 @@ module.exports = function (i) {
     }
 
     i.sliderY.top = newTop;
-    dom.css(i.sliderY.element, 'top', newTop);
+    _dom2.default.css(i.sliderY.element, 'top', newTop);
 
     // udpate content
     var journey = newTop - originTop;
@@ -122,17 +136,30 @@ module.exports = function (i) {
   }
 
   function mouseUpHandler() {
-    event.unbind(document, 'mousemove', mouseMoveHandler);
+    _event2.default.unbind(document, 'mousemove', mouseMoveHandler);
   }
 };
+
+var _event = require('../util/event');
+
+var _event2 = _interopRequireDefault(_event);
+
+var _dom = require('../util/dom');
+
+var _dom2 = _interopRequireDefault(_dom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+;
 
 },{"../util/dom":8,"../util/event":9}],3:[function(require,module,exports){
 'use strict';
 
-var event = require('../util/event');
-var dom = require('../util/dom');
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-module.exports = function (i) {
+exports.default = function (i) {
 
   function mouseWheelHandler(e) {
     // update slider
@@ -150,7 +177,7 @@ module.exports = function (i) {
       newTop = i.sumDeltaY * i.ratioY;
     }
 
-    dom.css(i.sliderY.element, 'top', newTop);
+    _dom2.default.css(i.sliderY.element, 'top', newTop);
 
     // update box
     var newScrollTop = 0;
@@ -163,64 +190,112 @@ module.exports = function (i) {
     e.stopPropagation();
   }
 
-  event.bind(i.content.element, 'wheel', mouseWheelHandler);
+  _event2.default.bind(i.content.element, 'wheel', mouseWheelHandler);
 };
+
+var _event = require('../util/event');
+
+var _event2 = _interopRequireDefault(_event);
+
+var _dom = require('../util/dom');
+
+var _dom2 = _interopRequireDefault(_dom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+;
 
 },{"../util/dom":8,"../util/event":9}],4:[function(require,module,exports){
 'use strict';
 
-module.exports = function (i) {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (i) {
   // todo
 };
+
+;
 
 },{}],5:[function(require,module,exports){
 'use strict';
 
-var Instance = require('./instance');
-var clickRail = require('./event/click-rail');
-var dragSlider = require('./event/drag-slider');
-var mouseWheel = require('./event/mouse-wheel');
-var pressKeyboard = require('./event/press-keyboard');
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-module.exports = function (element) {
+exports.default = function (element) {
   var $content = element.firstElementChild;
   if ($content.scrollHeight > $content.clientHeight) {
-    var i = new Instance(element);
+    var i = new _instance2.default(element);
 
-    clickRail(i);
-    dragSlider(i);
-    mouseWheel(i);
-    pressKeyboard(i);
+    (0, _clickRail2.default)(i);
+    (0, _dragSlider2.default)(i);
+    (0, _mouseWheel2.default)(i);
+    (0, _pressKeyboard2.default)(i);
   }
 };
+
+var _instance = require('./instance');
+
+var _instance2 = _interopRequireDefault(_instance);
+
+var _clickRail = require('./event/click-rail');
+
+var _clickRail2 = _interopRequireDefault(_clickRail);
+
+var _dragSlider = require('./event/drag-slider');
+
+var _dragSlider2 = _interopRequireDefault(_dragSlider);
+
+var _mouseWheel = require('./event/mouse-wheel');
+
+var _mouseWheel2 = _interopRequireDefault(_mouseWheel);
+
+var _pressKeyboard = require('./event/press-keyboard');
+
+var _pressKeyboard2 = _interopRequireDefault(_pressKeyboard);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+;
 
 },{"./event/click-rail":1,"./event/drag-slider":2,"./event/mouse-wheel":3,"./event/press-keyboard":4,"./instance":6}],6:[function(require,module,exports){
 'use strict';
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-var dom = require('./util/dom');
+var _dom = require('./util/dom');
+
+var _dom2 = _interopRequireDefault(_dom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Instance = (function () {
   function Instance(element) {
     _classCallCheck(this, Instance);
 
     function createSliderYElement() {
-      return dom.createElement('<div class="va-scrollbar-slider-y"></div>');
+      return _dom2.default.createElement('<div class="va-scrollbar-slider-y"></div>');
     }
 
     function createRailYElement() {
-      return dom.createElement('<div class="va-scrollbar-rail-y"></div>');
+      return _dom2.default.createElement('<div class="va-scrollbar-rail-y"></div>');
     }
 
     var $content = element.firstElementChild;
     var $railY = createRailYElement();
     var $sliderY = createSliderYElement();
 
-    dom.appendTo($railY, element);
-    dom.appendTo($sliderY, element);
+    _dom2.default.appendTo($railY, element);
+    _dom2.default.appendTo($sliderY, element);
 
     this.sumDeltaY = 0;
 
@@ -258,7 +333,7 @@ var Instance = (function () {
       height: this.container.height * this.ratioY
     };
 
-    dom.css(this.sliderY.element, 'height', this.sliderY.height + 'px');
+    _dom2.default.css(this.sliderY.element, 'height', this.sliderY.height + 'px');
   }
 
   _createClass(Instance, [{
@@ -271,14 +346,19 @@ var Instance = (function () {
   return Instance;
 })();
 
-module.exports = Instance;
+exports.default = Instance;
 
 },{"./util/dom":8}],7:[function(require,module,exports){
 'use strict';
 
-var init = require('./init');
+var _init = require('./init');
+
+var _init2 = _interopRequireDefault(_init);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var vaScrollbar = {
-  init: init,
+  init: _init2.default,
   update: 'update'
 };
 
@@ -292,6 +372,12 @@ if (typeof define === 'function' && define.amd) {
 
 },{"./init":5}],8:[function(require,module,exports){
 'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
 
 function getCss(element, styleName) {
   var styleValue = window.getComputedStyle(element)[styleName];
@@ -330,11 +416,9 @@ var dom = {
     element.innerHTML = string;
     return element.firstElementChild;
   },
-
   appendTo: function appendTo(child, parent) {
     parent.appendChild(child);
   },
-
   addClass: function addClass(element, className) {
     var classes = element.className.split(' ');
     if (classes.indexOf(className) < 0) {
@@ -344,7 +428,6 @@ var dom = {
     element.className = classes.join(' ');
     return element;
   },
-
   removeClass: function removeClass(element, className) {
     var classes = element.className.split(' ');
     var index = classes.indexOf(className);
@@ -355,9 +438,8 @@ var dom = {
     element.className = classes.join(' ');
     return element;
   },
-
   css: function css(element, styleNameOrObject, styleValue) {
-    if (typeof styleNameOrObject === 'object') {
+    if ((typeof styleNameOrObject === 'undefined' ? 'undefined' : _typeof(styleNameOrObject)) === 'object') {
       return setMultiCss(element, styleNameOrObject);
     } else {
       if (typeof styleValue === 'undefined') {
@@ -367,23 +449,23 @@ var dom = {
       }
     }
   }
-
 };
 
-module.exports = dom;
+exports.default = dom;
 
 },{}],9:[function(require,module,exports){
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 var event = {
   bind: function bind(element, name, listener) {
     element.addEventListener(name, listener, false);
   },
-
   unbind: function unbind(element, name, listener) {
     element.removeEventListener(name, listener, false);
   },
-
   once: function once(element, name, listener) {
     var that = this;
     var once = function once(e) {
@@ -395,6 +477,6 @@ var event = {
   }
 };
 
-module.exports = event;
+exports.default = event;
 
 },{}]},{},[7]);

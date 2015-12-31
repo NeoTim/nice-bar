@@ -1,9 +1,9 @@
 'use strict';
 
-let event = require('../util/event');
-let dom = require('../util/dom');
+import event from '../util/event';
+import dom from '../util/dom';
 
-module.exports = function(i) {
+export default function(i) {
 
   /**
    * get slider's new top

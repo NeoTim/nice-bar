@@ -20,4 +20,4 @@ let event = {
   }
 };
 
-module.exports = event;
+export default event;

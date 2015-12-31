@@ -1,6 +1,7 @@
 'use strict';
 
-let init = require('./init');
+import init from './init';
+
 let vaScrollbar = {
   init: init,
   update: 'update'

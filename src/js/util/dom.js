@@ -77,4 +77,4 @@ let dom = {
 
 };
 
-module.exports = dom;
+export default dom;

@@ -4,4 +4,4 @@ let helper = {
   // todo
 };
 
-module.exports = helper;
+export default helper;

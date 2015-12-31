@@ -1,6 +1,6 @@
 'use strict';
 
-let dom = require('./util/dom');
+import dom from './util/dom';
 
 class Instance {
   constructor(element) {
@@ -65,4 +65,4 @@ class Instance {
 
 }
 
-module.exports = Instance;
+export default Instance;

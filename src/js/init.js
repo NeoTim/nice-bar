@@ -1,12 +1,12 @@
 'use strict';
 
-let Instance = require('./instance');
-let clickRail = require('./event/click-rail');
-let dragSlider = require('./event/drag-slider');
-let mouseWheel = require('./event/mouse-wheel');
-let pressKeyboard = require('./event/press-keyboard');
+import Instance from './instance';
+import clickRail from './event/click-rail';
+import dragSlider from './event/drag-slider';
+import mouseWheel from './event/mouse-wheel';
+import pressKeyboard from './event/press-keyboard';
 
-module.exports = function(element) {
+export default function(element) {
   let $content = element.firstElementChild;
   if ($content.scrollHeight > $content.clientHeight) {
     let i = new Instance(element);
