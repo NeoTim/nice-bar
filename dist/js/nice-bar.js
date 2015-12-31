@@ -283,11 +283,11 @@ var Instance = (function () {
     _classCallCheck(this, Instance);
 
     function createSliderYElement() {
-      return _dom2.default.createElement('<div class="va-scrollbar-slider-y"></div>');
+      return _dom2.default.createElement('<div class="nice-bar-slider-y"></div>');
     }
 
     function createRailYElement() {
-      return _dom2.default.createElement('<div class="va-scrollbar-rail-y"></div>');
+      return _dom2.default.createElement('<div class="nice-bar-rail-y"></div>');
     }
 
     var $content = element.firstElementChild;
@@ -363,7 +363,7 @@ var vaScrollbar = {
 };
 
 if (typeof define === 'function' && define.amd) {
-  define('va-scrollbar', [], function () {
+  define('nice-bar', [], function () {
     return vaScrollbar;
   });
 } else {

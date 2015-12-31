@@ -6,11 +6,11 @@ class Instance {
   constructor(element) {
 
     function createSliderYElement() {
-      return dom.createElement('<div class="va-scrollbar-slider-y"></div>');
+      return dom.createElement('<div class="nice-bar-slider-y"></div>');
     }
 
     function createRailYElement() {
-      return dom.createElement('<div class="va-scrollbar-rail-y"></div>');
+      return dom.createElement('<div class="nice-bar-rail-y"></div>');
     }
 
     let $content = element.firstElementChild;

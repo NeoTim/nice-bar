@@ -1,3 +1,3 @@
-# va-scrollbar
+# nice-bar
 
 Doing

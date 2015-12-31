@@ -8,7 +8,7 @@ let vaScrollbar = {
 };
 
 if (typeof define === 'function' && define.amd) {
-  define('va-scrollbar', [], function() {
+  define('nice-bar', [], function() {
     return vaScrollbar;
   });
 } else {

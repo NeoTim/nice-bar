@@ -27,7 +27,7 @@ gulp.task('js', function() {
     .transform(babelify, {presets: ['es2015']})
     .bundle()
     .pipe(source('main.js'))
-    .pipe(rename('va-scrollbar.js'))
+    .pipe(rename('nice-bar.js'))
     .pipe(gulp.dest('./dist/js'))
     .pipe(streamify(uglify()))
     .pipe(streamify(replaceName(/\.js/g, '.min.js')))
