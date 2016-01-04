@@ -13,6 +13,9 @@
   "keywords": [
     "scrollbar"
   ],
+  "files": [
+    "dist"
+  ],
   "author": "forsigner",
   "license": "MIT",
   "bugs": {
