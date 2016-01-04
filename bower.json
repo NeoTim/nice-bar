@@ -1,0 +1,23 @@
+{
+  "name": "nice-bar",
+  "description": "A nice scrollbar.",
+  "main": "dist/js/nice-bar.js",
+  "authors": [
+    "forsigner"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "scrollbar"
+  ],
+  "homepage": "https://github.com/forsigner/nice-bar",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/bower_components",
+    "test",
+    "tests"
+  ]
+}
