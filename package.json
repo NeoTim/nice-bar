@@ -1,7 +1,7 @@
 {
   "name": "nice-bar",
   "version": "1.0.0",
-  "description": "A beautiful scrollbar.",
+  "description": "A nice scrollbar.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,7 +14,7 @@
     "scrollbar"
   ],
   "author": "forsigner",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/forsigner/nice-bar/issues"
   },
