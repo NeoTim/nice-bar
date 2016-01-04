@@ -357,17 +357,17 @@ var _init2 = _interopRequireDefault(_init);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var vaScrollbar = {
+var niceBar = {
   init: _init2.default,
   update: 'update'
 };
 
 if (typeof define === 'function' && define.amd) {
-  define('nice-bar', [], function () {
-    return vaScrollbar;
+  define('niceBar', [], function () {
+    return niceBar;
   });
 } else {
-  window.vaScrollbar = vaScrollbar;
+  window.niceBar = niceBar;
 }
 
 },{"./init":5}],8:[function(require,module,exports){

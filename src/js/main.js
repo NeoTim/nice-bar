@@ -2,15 +2,15 @@
 
 import init from './init';
 
-let vaScrollbar = {
+let niceBar = {
   init: init,
   update: 'update'
 };
 
 if (typeof define === 'function' && define.amd) {
-  define('nice-bar', [], function() {
-    return vaScrollbar;
+  define('niceBar', [], function() {
+    return niceBar;
   });
 } else {
-  window.vaScrollbar = vaScrollbar;
+  window.niceBar = niceBar;
 }
