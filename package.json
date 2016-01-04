@@ -1,6 +1,6 @@
 {
   "name": "nice-bar",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A nice scrollbar.",
   "main": "./src/js/nice-bar.js",
   "scripts": {
