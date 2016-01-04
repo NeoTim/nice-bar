@@ -10,8 +10,6 @@
     "scrollbar"
   ],
   "homepage": "https://github.com/forsigner/nice-bar",
-  "moduleType": [],
-  "private": true,
   "ignore": [
     "**/.*",
     "node_modules",
