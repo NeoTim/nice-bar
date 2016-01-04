@@ -2,7 +2,7 @@
 
 import init from './init';
 
-let niceBar = {init: init, update: 'update'};
+let niceBar = {init: init};
 
 (function(factory) {
   if (typeof define === 'function' && define.amd) {

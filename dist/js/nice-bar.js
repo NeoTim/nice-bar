@@ -359,7 +359,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
 
-var niceBar = { init: _init2.default, update: 'update' };
+var niceBar = { init: _init2.default };
 
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
