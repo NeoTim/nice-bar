@@ -1,6 +1,6 @@
 'use strict';
 
-let event = {
+var event = {
   bind(element, name, listener) {
     element.addEventListener(name, listener, false);
   },
@@ -10,8 +10,8 @@ let event = {
   },
 
   once(element, name, listener) {
-    let that = this;
-    let once = function(e) {
+    var that = this;
+    var once = function(e) {
       that.unbind(element, name, once);
       listener(e);
     };
@@ -20,4 +20,4 @@ let event = {
   }
 };
 
-export default event;
+module.exports = event;

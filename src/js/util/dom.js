@@ -1,7 +1,7 @@
 'use strict';
 
 function getCss(element, styleName) {
-  let styleValue = window.getComputedStyle(element)[styleName];
+  var styleValue = window.getComputedStyle(element)[styleName];
   if (parseInt(styleValue, 10) || parseInt(styleValue, 10) === 0) {
     styleValue = parseInt(styleValue, 10);
   }
@@ -19,8 +19,8 @@ function setSingleCss(element, styleName, styleValue) {
 }
 
 function setMultiCss(element, obj) {
-  for (let key in obj) {
-    let styleValue = obj[key];
+  for (var key in obj) {
+    var styleValue = obj[key];
     if (typeof styleValue === 'number') {
       styleValue = styleValue.toString() + 'px';
     }
@@ -31,9 +31,9 @@ function setMultiCss(element, obj) {
   return element;
 }
 
-let dom = {
+var dom = {
   createElement(string) {
-    let element = document.createElement('div');
+    var element = document.createElement('div');
     element.innerHTML = string;
     return element.firstElementChild;
   },
@@ -43,7 +43,7 @@ let dom = {
   },
 
   addClass(element, className) {
-    let classes = element.className.split(' ');
+    var classes = element.className.split(' ');
     if (classes.indexOf(className) < 0) {
       classes.push(className);
     }
@@ -53,8 +53,8 @@ let dom = {
   },
 
   removeClass(element, className) {
-    let classes = element.className.split(' ');
-    let index = classes.indexOf(className);
+    var classes = element.className.split(' ');
+    var index = classes.indexOf(className);
     if (indexOf > -1) {
       classes.splice(index, 1);
     }
@@ -77,4 +77,4 @@ let dom = {
 
 };
 
-export default dom;
+module.exports = dom;

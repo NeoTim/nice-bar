@@ -1,14 +1,14 @@
 'use strict';
 
-import event from '../util/event';
-import dom from '../util/dom';
+var event = require('../util/event');
+var dom = require('../util/dom');
 
-export default function(i) {
+module.exports = function(i) {
 
   function mouseWheelHandler(e) {
     // update slider
     i.sumDeltaY += e.deltaY;
-    let newTop = 0;
+    var newTop = 0;
 
     if (i.sumDeltaY * i.ratioY < 0) {
       newTop = 0;
@@ -26,7 +26,7 @@ export default function(i) {
     dom.css(i.sliderY.element, 'top', newTop);
 
     // update box
-    let newScrollTop = 0;
+    var newScrollTop = 0;
     newScrollTop += i.sumDeltaY;
     i.content.element.scrollTop = newScrollTop;
 

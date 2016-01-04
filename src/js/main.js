@@ -1,8 +1,8 @@
 'use strict';
 
-import init from './init';
+var init = require('./init');
 
-let niceBar = {init: init};
+var niceBar = {init: init};
 
 (function(factory) {
   if (typeof define === 'function' && define.amd) {

@@ -1,14 +1,14 @@
 'use strict';
 
-import event from '../util/event';
-import dom from '../util/dom';
+var event = require('../util/event');
+var dom = require('../util/dom');
 
-export default function(i) {
-  let originPageY;
-  let originTop;
-  let originScrollTop;
-  let differenceHeight = i.railY.height - i.sliderY.height;
-  let ratioY = i.ratioY;
+module.exports =  function(i) {
+  var originPageY;
+  var originTop;
+  var originScrollTop;
+  var differenceHeight = i.railY.height - i.sliderY.height;
+  var ratioY = i.ratioY;
 
   event.bind(i.sliderY.element, 'mousedown', function(e) {
     originPageY = e.pageY;
@@ -29,7 +29,7 @@ export default function(i) {
     i.sliderY.deltaY = 0;
 
     // update slider
-    let newTop = e.pageY - originPageY + originTop;
+    var newTop = e.pageY - originPageY + originTop;
 
     if (newTop <= 0) {
       newTop = 0;
@@ -41,8 +41,8 @@ export default function(i) {
     dom.css(i.sliderY.element, 'top', newTop);
 
     // udpate content
-    let journey = newTop - originTop;
-    let newScrollTop = journey / ratioY;
+    var journey = newTop - originTop;
+    var newScrollTop = journey / ratioY;
     newScrollTop += originScrollTop;
     i.content.element.scrollTop = newScrollTop;
     i.sumDeltaY = i.content.element.scrollTop;

@@ -1,9 +1,9 @@
 'use strict';
 
-import event from '../util/event';
-import dom from '../util/dom';
+var event = require('../util/event');
+var dom = require('../util/dom');
 
-export default function(i) {
+module.exports =  function(i) {
 
   /**
    * get slider's new top
@@ -11,7 +11,7 @@ export default function(i) {
    * @return {number} newTop slider's new top
    */
   function getNewTop(offsetY) {
-    let newTop;
+    var newTop;
 
     if (offsetY < i.sliderY.height / 2) {
       newTop = 0;
@@ -31,8 +31,8 @@ export default function(i) {
    * @return null
    */
   function updateContent(newTop, originTop) {
-    let journey = newTop - originTop;
-    let scrollTop = journey / i.ratioY;
+    var journey = newTop - originTop;
+    var scrollTop = journey / i.ratioY;
     i.content.element.scrollTop += scrollTop;
     i.sumDeltaY = i.content.element.scrollTop;
   }
@@ -54,8 +54,8 @@ export default function(i) {
    * @return null
    */
   function clickRailYHandler(e) {
-    let originTop = dom.css(i.sliderY.element, 'top');
-    let newTop = getNewTop(e.offsetY);
+    var originTop = dom.css(i.sliderY.element, 'top');
+    var newTop = getNewTop(e.offsetY);
 
     updateSlider(newTop);
     updateContent(newTop, originTop);
