@@ -2,15 +2,17 @@
 
 import init from './init';
 
-let niceBar = {
-  init: init,
-  update: 'update'
-};
+let niceBar = {init: init, update: 'update'};
 
-if (typeof define === 'function' && define.amd) {
-  define('niceBar', [], function() {
-    return niceBar;
-  });
-} else {
-  window.niceBar = niceBar;
-}
+(function(factory) {
+  if (typeof define === 'function' && define.amd) {
+    define([], factory);
+  } else if (window && typeof window === 'object') {
+    window.niceBar = factory();
+  } else if (typeof module === 'object' && module.exports) {
+    module.exports = factory();
+  }
+}(function() {
+
+  return niceBar;
+}));

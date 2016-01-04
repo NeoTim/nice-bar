@@ -357,18 +357,22 @@ var _init2 = _interopRequireDefault(_init);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var niceBar = {
-  init: _init2.default,
-  update: 'update'
-};
+function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
 
-if (typeof define === 'function' && define.amd) {
-  define('niceBar', [], function () {
-    return niceBar;
-  });
-} else {
-  window.niceBar = niceBar;
-}
+var niceBar = { init: _init2.default, update: 'update' };
+
+(function (factory) {
+  if (typeof define === 'function' && define.amd) {
+    define([], factory);
+  } else if (window && (typeof window === 'undefined' ? 'undefined' : _typeof(window)) === 'object') {
+    window.niceBar = factory();
+  } else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
+    module.exports = factory();
+  }
+})(function () {
+
+  return niceBar;
+});
 
 },{"./init":5}],8:[function(require,module,exports){
 'use strict';
