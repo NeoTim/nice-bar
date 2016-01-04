@@ -1,6 +1,24 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
+function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+
+var niceBar = require('./main');
+
+(function (factory) {
+  if (typeof define === 'function' && define.amd) {
+    define([], factory);
+  } else if ((typeof window === 'undefined' ? 'undefined' : _typeof(window)) === 'object') {
+    window.niceBar = factory();
+  }
+})(function () {
+
+  return niceBar;
+});
+
+},{"./main":8}],2:[function(require,module,exports){
+'use strict';
+
 var event = require('../util/event');
 var dom = require('../util/dom');
 
@@ -67,7 +85,7 @@ module.exports = function (i) {
   event.bind(i.railY.element, 'click', clickRailYHandler);
 };
 
-},{"../util/dom":8,"../util/event":9}],2:[function(require,module,exports){
+},{"../util/dom":9,"../util/event":10}],3:[function(require,module,exports){
 'use strict';
 
 var event = require('../util/event');
@@ -126,7 +144,7 @@ module.exports = function (i) {
   }
 };
 
-},{"../util/dom":8,"../util/event":9}],3:[function(require,module,exports){
+},{"../util/dom":9,"../util/event":10}],4:[function(require,module,exports){
 'use strict';
 
 var event = require('../util/event');
@@ -166,14 +184,14 @@ module.exports = function (i) {
   event.bind(i.content.element, 'wheel', mouseWheelHandler);
 };
 
-},{"../util/dom":8,"../util/event":9}],4:[function(require,module,exports){
+},{"../util/dom":9,"../util/event":10}],5:[function(require,module,exports){
 'use strict';
 
 module.exports = function (i) {
   // todo
 };
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 'use strict';
 
 var Instance = require('./instance');
@@ -194,7 +212,7 @@ module.exports = function (element) {
   }
 };
 
-},{"./event/click-rail":1,"./event/drag-slider":2,"./event/mouse-wheel":3,"./event/press-keyboard":4,"./instance":6}],6:[function(require,module,exports){
+},{"./event/click-rail":2,"./event/drag-slider":3,"./event/mouse-wheel":4,"./event/press-keyboard":5,"./instance":7}],7:[function(require,module,exports){
 'use strict';
 
 var dom = require('./util/dom');
@@ -261,29 +279,14 @@ Instance.prototype.toString = function () {
 
 module.exports = Instance;
 
-},{"./util/dom":8}],7:[function(require,module,exports){
+},{"./util/dom":9}],8:[function(require,module,exports){
 'use strict';
-
-function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
 
 var init = require('./init');
 
-var niceBar = { init: init };
+module.exports = { init: init };
 
-(function (factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if ((typeof window === 'undefined' ? 'undefined' : _typeof(window)) === 'object') {
-    window.niceBar = factory();
-  } else if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object' && module.exports) {
-    module.exports = factory();
-  }
-})(function () {
-
-  return niceBar;
-});
-
-},{"./init":5}],8:[function(require,module,exports){
+},{"./init":6}],9:[function(require,module,exports){
 'use strict';
 
 function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
@@ -362,7 +365,7 @@ var dom = {
 
 module.exports = dom;
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 'use strict';
 
 var event = {
@@ -385,4 +388,4 @@ var event = {
 
 module.exports = event;
 
-},{}]},{},[7]);
+},{}]},{},[1]);
