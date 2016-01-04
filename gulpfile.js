@@ -23,7 +23,7 @@ gulp.task('less', function() {
 });
 
 gulp.task('js', function() {
-  return browserify('./src/js/main.js')
+  return browserify('./src/js/broswer-main.js')
     .transform(babelify, {presets: ['es2015']})
     .bundle()
     .pipe(source('main.js'))
