@@ -22,8 +22,8 @@ function Instance(element) {
   this.sumDeltaY = 0;
 
   this.container = {
-    width: $content.clientWidth,
-    height: $content.clientHeight
+    width: element.clientWidth,
+    height: element.clientHeight
   };
 
   this.content = {
@@ -37,7 +37,7 @@ function Instance(element) {
   this.ratioX = this.container.width / this.content.width;
   this.ratioY = this.container.height / this.content.height;
 
-  this.railX = {width: 400, height: ''};
+  this.railX = { width: 400, height: '' };
 
   this.railY = {
     element: $railY,
@@ -45,7 +45,7 @@ function Instance(element) {
     height: $content.clientHeight
   };
 
-  this.sliderX = {width: 400, height: ''};
+  this.sliderX = { width: 400, height: '' };
 
   this.sliderY = {
     deltaY: 0, // 增量
