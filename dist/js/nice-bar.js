@@ -113,7 +113,6 @@ module.exports = function (i) {
    * @return null
    */
   function mouseMoveHandler(e) {
-
     i.sliderY.deltaY = 0;
 
     // update slider
@@ -202,28 +201,16 @@ var pressKeyboard = require('./event/press-keyboard');
 
 var event = require('./util/event');
 var dom = require('./util/dom');
-console.log(222);
-console.log(event);
 
 module.exports = function (element) {
 
-  // var inner = element.innerHTML;
-  // element.innerHTML = '';
-  // element.innerHTML = '<div id="niceBarContent"></div>';
-  //
-  // var $content = document.getElementById('niceBarContent');
-  // $content.innerHTML = inner;
-  // console.log(element.scrollHeight);
-  // console.log(element.clientHeight);
-  // console.log($content.scrollHeight);
-  // console.log($content.clientHeight);
+  var inner = element.innerHTML;
+  element.innerHTML = '';
+  element.innerHTML = '<div id="niceBarContent"></div>';
 
-  var $content = element.firstElementChild;
+  var $content = document.getElementById('niceBarContent');
+  $content.innerHTML = inner;
 
-  // console.log(element.scrollHeight);
-  // console.log(element.clientHeight);
-  // console.log($content.scrollHeight);
-  // console.log($content.clientHeight);
   if ($content.scrollHeight > element.clientHeight) {
     var i = new Instance(element);
 
@@ -251,7 +238,8 @@ var dom = require('./util/dom');
 
 function Instance(element) {
 
-  var $content = element.firstElementChild;
+  // var $content = element.firstElementChild;
+  var $content = document.getElementById('niceBarContent');
   var $railY = createRailYElement();
   var $sliderY = createSliderYElement();
 
@@ -277,14 +265,12 @@ function Instance(element) {
   this.ratioX = this.container.width / this.content.width;
   this.ratioY = this.container.height / this.content.height;
 
-  console.log(this.ratioY); //0.25460829493087556
-
   this.railX = { width: 400, height: '' };
 
   this.railY = {
     element: $railY,
     width: 400,
-    height: $content.clientHeight
+    height: this.container.height
   };
 
   this.sliderX = { width: 400, height: '' };
@@ -298,6 +284,12 @@ function Instance(element) {
   };
 
   dom.css(this.sliderY.element, 'height', this.sliderY.height + 'px');
+
+  dom.css(this.container.element, 'overflow', 'hidden');
+  dom.css(this.container.element, 'position', 'relative');
+
+  dom.css(this.content.element, 'overflow', 'hidden');
+  dom.css(this.content.element, 'height', this.container.height);
 
   ////////////////////////////////////////////
 

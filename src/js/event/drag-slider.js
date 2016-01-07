@@ -25,7 +25,6 @@ module.exports =  function(i) {
    * @return null
    */
   function mouseMoveHandler(e) {
-
     i.sliderY.deltaY = 0;
 
     // update slider

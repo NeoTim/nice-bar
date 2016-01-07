@@ -8,28 +8,16 @@ var pressKeyboard = require('./event/press-keyboard');
 
 var event = require('./util/event');
 var dom = require('./util/dom');
-console.log(222);
-console.log(event);
 
 module.exports = function(element) {
 
-  // var inner = element.innerHTML;
-  // element.innerHTML = '';
-  // element.innerHTML = '<div id="niceBarContent"></div>';
-  //
-  // var $content = document.getElementById('niceBarContent');
-  // $content.innerHTML = inner;
-  // console.log(element.scrollHeight);
-  // console.log(element.clientHeight);
-  // console.log($content.scrollHeight);
-  // console.log($content.clientHeight);
+  var inner = element.innerHTML;
+  element.innerHTML = '';
+  element.innerHTML = '<div id="niceBarContent"></div>';
 
-  var $content = element.firstElementChild;
+  var $content = document.getElementById('niceBarContent');
+  $content.innerHTML = inner;
 
-  // console.log(element.scrollHeight);
-  // console.log(element.clientHeight);
-  // console.log($content.scrollHeight);
-  // console.log($content.clientHeight);
   if ($content.scrollHeight > element.clientHeight) {
     var i = new Instance(element);
 

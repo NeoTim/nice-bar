@@ -4,7 +4,8 @@ var dom = require('./util/dom');
 
 function Instance(element) {
 
-  var $content = element.firstElementChild;
+  // var $content = element.firstElementChild;
+  var $content = document.getElementById('niceBarContent');
   var $railY = createRailYElement();
   var $sliderY = createSliderYElement();
 
@@ -30,14 +31,12 @@ function Instance(element) {
   this.ratioX = this.container.width / this.content.width;
   this.ratioY = this.container.height / this.content.height;
 
-  console.log(this.ratioY); //0.25460829493087556
-
   this.railX = { width: 400, height: '' };
 
   this.railY = {
     element: $railY,
     width: 400,
-    height: $content.clientHeight
+    height: this.container.height
   };
 
   this.sliderX = { width: 400, height: '' };
@@ -51,6 +50,12 @@ function Instance(element) {
   };
 
   dom.css(this.sliderY.element, 'height', this.sliderY.height + 'px');
+
+  dom.css(this.container.element, 'overflow', 'hidden');
+  dom.css(this.container.element, 'position', 'relative');
+
+  dom.css(this.content.element, 'overflow', 'hidden');
+  dom.css(this.content.element, 'height', this.container.height);
 
   ////////////////////////////////////////////
 
