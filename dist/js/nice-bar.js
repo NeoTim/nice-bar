@@ -200,32 +200,56 @@ var dragSlider = require('./event/drag-slider');
 var mouseWheel = require('./event/mouse-wheel');
 var pressKeyboard = require('./event/press-keyboard');
 
+var event = require('./util/event');
+var dom = require('./util/dom');
+console.log(222);
+console.log(event);
+
 module.exports = function (element) {
+
+  // var inner = element.innerHTML;
+  // element.innerHTML = '';
+  // element.innerHTML = '<div id="niceBarContent"></div>';
+  //
+  // var $content = document.getElementById('niceBarContent');
+  // $content.innerHTML = inner;
+  // console.log(element.scrollHeight);
+  // console.log(element.clientHeight);
+  // console.log($content.scrollHeight);
+  // console.log($content.clientHeight);
+
   var $content = element.firstElementChild;
-  if ($content.scrollHeight > $content.clientHeight) {
+
+  // console.log(element.scrollHeight);
+  // console.log(element.clientHeight);
+  // console.log($content.scrollHeight);
+  // console.log($content.clientHeight);
+  if ($content.scrollHeight > element.clientHeight) {
     var i = new Instance(element);
 
     clickRail(i);
     dragSlider(i);
     mouseWheel(i);
     pressKeyboard(i);
+
+    event.bind(i.container.element, 'mouseenter', function (e) {
+      dom.addClass(i.sliderY.element, 'fade-in');
+      dom.removeClass(i.sliderY.element, 'fade-out');
+    });
+
+    event.bind(i.container.element, 'mouseleave', function (e) {
+      dom.addClass(i.sliderY.element, 'fade-out');
+      dom.removeClass(i.sliderY.element, 'fade-in');
+    });
   }
 };
 
-},{"./event/click-rail":2,"./event/drag-slider":3,"./event/mouse-wheel":4,"./event/press-keyboard":5,"./instance":7}],7:[function(require,module,exports){
+},{"./event/click-rail":2,"./event/drag-slider":3,"./event/mouse-wheel":4,"./event/press-keyboard":5,"./instance":7,"./util/dom":9,"./util/event":10}],7:[function(require,module,exports){
 'use strict';
 
 var dom = require('./util/dom');
 
 function Instance(element) {
-
-  function createSliderYElement() {
-    return dom.createElement('<div class="nice-bar-slider-y"></div>');
-  }
-
-  function createRailYElement() {
-    return dom.createElement('<div class="nice-bar-rail-y"></div>');
-  }
 
   var $content = element.firstElementChild;
   var $railY = createRailYElement();
@@ -237,8 +261,9 @@ function Instance(element) {
   this.sumDeltaY = 0;
 
   this.container = {
-    width: $content.clientWidth,
-    height: $content.clientHeight
+    element: element,
+    width: element.clientWidth,
+    height: element.clientHeight
   };
 
   this.content = {
@@ -251,6 +276,8 @@ function Instance(element) {
 
   this.ratioX = this.container.width / this.content.width;
   this.ratioY = this.container.height / this.content.height;
+
+  console.log(this.ratioY); //0.25460829493087556
 
   this.railX = { width: 400, height: '' };
 
@@ -271,11 +298,17 @@ function Instance(element) {
   };
 
   dom.css(this.sliderY.element, 'height', this.sliderY.height + 'px');
-}
 
-Instance.prototype.toString = function () {
-  return '(' + this.x + ', ' + this.y + ')';
-};
+  ////////////////////////////////////////////
+
+  function createSliderYElement() {
+    return dom.createElement('<div class="nice-bar-slider-y"></div>');
+  }
+
+  function createRailYElement() {
+    return dom.createElement('<div class="nice-bar-rail-y"></div>');
+  }
+}
 
 module.exports = Instance;
 
@@ -343,7 +376,7 @@ var dom = {
   removeClass: function removeClass(element, className) {
     var classes = element.className.split(' ');
     var index = classes.indexOf(className);
-    if (indexOf > -1) {
+    if (index > -1) {
       classes.splice(index, 1);
     }
 

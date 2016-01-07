@@ -4,14 +4,6 @@ var dom = require('./util/dom');
 
 function Instance(element) {
 
-  function createSliderYElement() {
-    return dom.createElement('<div class="nice-bar-slider-y"></div>');
-  }
-
-  function createRailYElement() {
-    return dom.createElement('<div class="nice-bar-rail-y"></div>');
-  }
-
   var $content = element.firstElementChild;
   var $railY = createRailYElement();
   var $sliderY = createSliderYElement();
@@ -22,6 +14,7 @@ function Instance(element) {
   this.sumDeltaY = 0;
 
   this.container = {
+    element: element,
     width: element.clientWidth,
     height: element.clientHeight
   };
@@ -36,6 +29,8 @@ function Instance(element) {
 
   this.ratioX = this.container.width / this.content.width;
   this.ratioY = this.container.height / this.content.height;
+
+  console.log(this.ratioY); //0.25460829493087556
 
   this.railX = { width: 400, height: '' };
 
@@ -57,10 +52,16 @@ function Instance(element) {
 
   dom.css(this.sliderY.element, 'height', this.sliderY.height + 'px');
 
-}
+  ////////////////////////////////////////////
 
-Instance.prototype.toString = function() {
-  return '(' + this.x + ', ' + this.y + ')';
-};
+  function createSliderYElement() {
+    return dom.createElement('<div class="nice-bar-slider-y"></div>');
+  }
+
+  function createRailYElement() {
+    return dom.createElement('<div class="nice-bar-rail-y"></div>');
+  }
+
+}
 
 module.exports = Instance;

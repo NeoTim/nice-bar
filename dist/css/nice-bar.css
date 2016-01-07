@@ -2,16 +2,42 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: 8px;
+  width: 6px;
   background: #ddd;
   height: 100%;
-  z-index: 1000;
+  z-index: 100000;
+  background: rgba(0, 0, 0, 0);
 }
 .nice-bar-slider-y {
   position: absolute;
   top: 0;
   right: 0;
-  width: 8px;
+  width: 6px;
   background: #aaa;
-  z-index: 1001;
+  z-index: 100001;
+  opacity: 0;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+.nice-bar-slider-y.fade-in {
+  animation-name: fadeIn;
+}
+.nice-bar-slider-y.fade-out {
+  animation-name: fadeOut;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }

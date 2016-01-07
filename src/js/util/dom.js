@@ -55,7 +55,7 @@ var dom = {
   removeClass(element, className) {
     var classes = element.className.split(' ');
     var index = classes.indexOf(className);
-    if (indexOf > -1) {
+    if (index > -1) {
       classes.splice(index, 1);
     }
 
