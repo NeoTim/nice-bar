@@ -3,7 +3,7 @@
 var event = require('../util/event');
 var dom = require('../util/dom');
 
-module.exports =  function(i) {
+module.exports = function(i) {
   var originPageY;
   var originTop;
   var originScrollTop;
@@ -17,6 +17,7 @@ module.exports =  function(i) {
 
     event.bind(document, 'mousemove', mouseMoveHandler);
     event.once(document, 'mouseup', mouseUpHandler);
+
   });
 
   /**
@@ -25,6 +26,11 @@ module.exports =  function(i) {
    * @return null
    */
   function mouseMoveHandler(e) {
+    console.log(11);
+
+    dom.addClass(i.sliderY.element, 'fade-in');
+    dom.removeClass(i.sliderY.element, 'fade-out');
+
     i.sliderY.deltaY = 0;
 
     // update slider
@@ -52,5 +58,8 @@ module.exports =  function(i) {
 
   function mouseUpHandler() {
     event.unbind(document, 'mousemove', mouseMoveHandler);
+
+    dom.addClass(i.sliderY.element, 'fade-out');
+    dom.removeClass(i.sliderY.element, 'fade-in');
   }
 };

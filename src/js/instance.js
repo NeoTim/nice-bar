@@ -19,6 +19,8 @@ function Instance(element) {
     width: element.clientWidth,
     height: element.clientHeight
   };
+  
+  this.ing = true;
 
   this.content = {
     deltaY: 0, // 增量
