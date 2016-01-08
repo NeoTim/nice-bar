@@ -25,7 +25,7 @@ function setMultiCss(element, obj) {
       styleValue = styleValue.toString() + 'px';
     }
 
-    element.style[styleName] = styleValue;
+    element.style[key] = styleValue;
   }
 
   return element;

@@ -26,10 +26,7 @@ module.exports = function(i) {
    * @return null
    */
   function mouseMoveHandler(e) {
-    console.log(11);
-
-    dom.addClass(i.sliderY.element, 'fade-in');
-    dom.removeClass(i.sliderY.element, 'fade-out');
+    i.showSliderY();
 
     i.sliderY.deltaY = 0;
 
@@ -59,7 +56,6 @@ module.exports = function(i) {
   function mouseUpHandler() {
     event.unbind(document, 'mousemove', mouseMoveHandler);
 
-    dom.addClass(i.sliderY.element, 'fade-out');
-    dom.removeClass(i.sliderY.element, 'fade-in');
+    i.hideSliderY();
   }
 };

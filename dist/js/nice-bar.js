@@ -16,7 +16,7 @@ var niceBar = require('./main');
   return niceBar;
 });
 
-},{"./main":8}],2:[function(require,module,exports){
+},{"./main":9}],2:[function(require,module,exports){
 'use strict';
 
 var event = require('../util/event');
@@ -85,7 +85,7 @@ module.exports = function (i) {
   event.bind(i.railY.element, 'click', clickRailYHandler);
 };
 
-},{"../util/dom":9,"../util/event":10}],3:[function(require,module,exports){
+},{"../util/dom":10,"../util/event":11}],3:[function(require,module,exports){
 'use strict';
 
 var event = require('../util/event');
@@ -113,10 +113,7 @@ module.exports = function (i) {
    * @return null
    */
   function mouseMoveHandler(e) {
-    console.log(11);
-
-    dom.addClass(i.sliderY.element, 'fade-in');
-    dom.removeClass(i.sliderY.element, 'fade-out');
+    i.showSliderY();
 
     i.sliderY.deltaY = 0;
 
@@ -146,12 +143,26 @@ module.exports = function (i) {
   function mouseUpHandler() {
     event.unbind(document, 'mousemove', mouseMoveHandler);
 
-    dom.addClass(i.sliderY.element, 'fade-out');
-    dom.removeClass(i.sliderY.element, 'fade-in');
+    i.hideSliderY();
   }
 };
 
-},{"../util/dom":9,"../util/event":10}],4:[function(require,module,exports){
+},{"../util/dom":10,"../util/event":11}],4:[function(require,module,exports){
+'use strict';
+
+var event = require('../util/event');
+
+module.exports = function (i) {
+  event.bind(i.container.element, 'mouseenter', function (e) {
+    i.showSliderY();
+  });
+
+  event.bind(i.container.element, 'mouseleave', function (e) {
+    i.hideSliderY();
+  });
+};
+
+},{"../util/event":11}],5:[function(require,module,exports){
 'use strict';
 
 var event = require('../util/event');
@@ -191,137 +202,146 @@ module.exports = function (i) {
   event.bind(i.content.element, 'wheel', mouseWheelHandler);
 };
 
-},{"../util/dom":9,"../util/event":10}],5:[function(require,module,exports){
+},{"../util/dom":10,"../util/event":11}],6:[function(require,module,exports){
 'use strict';
 
 module.exports = function (i) {
   // todo
 };
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 'use strict';
 
-var Instance = require('./instance');
+var instance = require('./instance');
 var clickRail = require('./event/click-rail');
 var dragSlider = require('./event/drag-slider');
 var mouseWheel = require('./event/mouse-wheel');
 var pressKeyboard = require('./event/press-keyboard');
-
-var event = require('./util/event');
-var dom = require('./util/dom');
+var hoverContainer = require('./event/hover-container');
 
 module.exports = function (element) {
-
-  var inner = element.innerHTML;
-  element.innerHTML = '';
-  element.innerHTML = '<div id="niceBarContent"></div>';
-
-  var $content = document.getElementById('niceBarContent');
-  $content.innerHTML = inner;
+  var $content = createContentElement();
 
   if ($content.scrollHeight > element.clientHeight) {
-    var i = new Instance(element);
+    var i = Object.create(instance);
+    i.init(element);
 
     clickRail(i);
     dragSlider(i);
     mouseWheel(i);
     pressKeyboard(i);
+    hoverContainer(i);
+  }
 
-    event.bind(i.container.element, 'mouseenter', function (e) {
-      dom.addClass(i.sliderY.element, 'fade-in');
-      dom.removeClass(i.sliderY.element, 'fade-out');
-    });
+  // //////////////////
+  function createContentElement() {
+    var inner = element.innerHTML;
+    element.innerHTML = '<div id="niceBarContent"></div>';
 
-    event.bind(i.container.element, 'mouseleave', function (e) {
-      dom.addClass(i.sliderY.element, 'fade-out');
-      dom.removeClass(i.sliderY.element, 'fade-in');
-    });
+    var $content = document.getElementById('niceBarContent');
+    $content.innerHTML = inner;
+    return $content;
   }
 };
 
-},{"./event/click-rail":2,"./event/drag-slider":3,"./event/mouse-wheel":4,"./event/press-keyboard":5,"./instance":7,"./util/dom":9,"./util/event":10}],7:[function(require,module,exports){
+},{"./event/click-rail":2,"./event/drag-slider":3,"./event/hover-container":4,"./event/mouse-wheel":5,"./event/press-keyboard":6,"./instance":8}],8:[function(require,module,exports){
 'use strict';
 
 var dom = require('./util/dom');
 
-function Instance(element) {
+var instance = {
+  init: function init(element) {
 
-  // var $content = element.firstElementChild;
-  var $content = document.getElementById('niceBarContent');
-  var $railY = createRailYElement();
-  var $sliderY = createSliderYElement();
+    var $content = document.getElementById('niceBarContent');
+    var $railY = createRailYElement();
+    var $sliderY = createSliderYElement();
 
-  dom.appendTo($railY, element);
-  dom.appendTo($sliderY, element);
+    dom.appendTo($railY, element);
+    dom.appendTo($sliderY, element);
 
-  this.sumDeltaY = 0;
+    this.sumDeltaY = 0;
 
-  this.container = {
-    element: element,
-    width: element.clientWidth,
-    height: element.clientHeight
-  };
+    this.container = {
+      element: element,
+      width: element.clientWidth,
+      height: element.clientHeight
+    };
 
-  this.ing = true;
+    this.ing = true;
 
-  this.content = {
-    deltaY: 0, // 增量
-    element: $content,
-    width: $content.clientWidth,
-    height: $content.scrollHeight,
-    scrollTop: $content.scrollTop
-  };
+    this.content = {
+      deltaY: 0, // 增量
+      element: $content,
+      width: $content.clientWidth,
+      height: $content.scrollHeight,
+      scrollTop: $content.scrollTop
+    };
 
-  this.ratioX = this.container.width / this.content.width;
-  this.ratioY = this.container.height / this.content.height;
+    this.ratioX = this.container.width / this.content.width;
+    this.ratioY = this.container.height / this.content.height;
 
-  this.railX = { width: 400, height: '' };
+    this.railX = { width: 400, height: '' };
 
-  this.railY = {
-    element: $railY,
-    width: 400,
-    height: this.container.height
-  };
+    this.railY = {
+      element: $railY,
+      width: 400,
+      height: this.container.height
+    };
 
-  this.sliderX = { width: 400, height: '' };
+    this.sliderX = { width: 400, height: '' };
 
-  this.sliderY = {
-    deltaY: 0, // 增量
-    element: $sliderY,
-    top: 0,
-    width: 40,
-    height: this.container.height * this.ratioY
-  };
+    this.sliderY = {
+      deltaY: 0, // 增量
+      element: $sliderY,
+      top: 0,
+      width: 40,
+      height: this.container.height * this.ratioY
+    };
 
-  dom.css(this.sliderY.element, 'height', this.sliderY.height + 'px');
+    dom.css(this.sliderY.element, 'height', this.sliderY.height + 'px');
 
-  dom.css(this.container.element, 'overflow', 'hidden');
-  dom.css(this.container.element, 'position', 'relative');
+    dom.css(this.container.element, {
+      overflow: 'hidden',
+      position: 'relative'
+    });
 
-  dom.css(this.content.element, 'overflow', 'hidden');
-  dom.css(this.content.element, 'height', this.container.height);
+    dom.css(this.content.element, {
+      overflow: 'hidden',
+      height: this.container.height
+    });
+  },
 
-  ////////////////////////////////////////////
+  showSliderY: function showSliderY() {
+    dom.addClass(this.sliderY.element, 'fade-in');
+    dom.removeClass(this.sliderY.element, 'fade-out');
+  },
 
-  function createSliderYElement() {
-    return dom.createElement('<div class="nice-bar-slider-y"></div>');
+  hideSliderY: function hideSliderY() {
+    dom.addClass(this.sliderY.element, 'fade-out');
+    dom.removeClass(this.sliderY.element, 'fade-in');
   }
 
-  function createRailYElement() {
-    return dom.createElement('<div class="nice-bar-rail-y"></div>');
-  }
+};
+
+// ////////////////////////////////////////
+function createSliderYElement() {
+  return dom.createElement('<div class="nice-bar-slider-y"></div>');
 }
 
-module.exports = Instance;
+function createRailYElement() {
+  return dom.createElement('<div class="nice-bar-rail-y"></div>');
+}
 
-},{"./util/dom":9}],8:[function(require,module,exports){
+module.exports = instance;
+
+},{"./util/dom":10}],9:[function(require,module,exports){
 'use strict';
 
 var init = require('./init');
 
 module.exports = { init: init };
 
-},{"./init":6}],9:[function(require,module,exports){
+},{"./init":7}],10:[function(require,module,exports){
 'use strict';
 
 function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
@@ -351,7 +371,7 @@ function setMultiCss(element, obj) {
       styleValue = styleValue.toString() + 'px';
     }
 
-    element.style[styleName] = styleValue;
+    element.style[key] = styleValue;
   }
 
   return element;
@@ -400,7 +420,7 @@ var dom = {
 
 module.exports = dom;
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 'use strict';
 
 var event = {
