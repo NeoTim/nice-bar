@@ -30,13 +30,13 @@ $ npm install nice-bar --save
 # Usage
 
 ```html
-<link rel="stylesheet" type="text/css" href="./bower_components/nice-bar/dist/css/nice-bar.min.css" />
-<script src="./bower_components/nice-bar/dist/js/nice-bar.js" charset="utf-8"></script>
+<link rel="stylesheet" href="bower_components/nice-bar/dist/css/nice-bar.min.css" />
+<script src="bower_components/nice-bar/dist/js/nice-bar.js"></script>
 
 <style>
   .container {
-    height: 500px; /* height is required */
-    /* height: 100%; */
+    height: 500px; /* height is the only css property required */
+    /* height: 100%; work also*/
   }
 </style>
 
