@@ -6,6 +6,10 @@
   "scripts": {
     "test": "jest"
   },
+  "jest": {
+    "collectCoverage": true,
+    "coverageFormats": ["json", "html"]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/forsigner/nice-bar.git"
