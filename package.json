@@ -4,7 +4,7 @@
   "description": "A nice scrollbar.",
   "main": "./index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -32,6 +32,7 @@
     "gulp-replace-name": "^1.0.1",
     "gulp-streamify": "^1.0.2",
     "gulp-uglify": "^1.5.1",
+    "jest-cli": "^0.8.2",
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {}
