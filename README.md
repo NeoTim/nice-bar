@@ -1,4 +1,4 @@
-# nice-bar [![Build Status](https://travis-ci.org/forsigner/nice-bar.svg?branch=master)](https://travis-ci.org/forsigner/nice-bar)
+# nice-bar [![Build Status](https://travis-ci.org/forsigner/nice-bar.svg?branch=master)](https://travis-ci.org/forsigner/nice-bar) [![NPM Version](http://img.shields.io/npm/v/nice-bar.svg?style=flat)](https://www.npmjs.org/package/nice-bar)
 
 A nice and lightweight scrollbar.
 
