@@ -4,7 +4,7 @@ A nice and lightweight scrollbar.
 
 ## Demo
 
-[demo](http://nice-bar.mipinr.com/)
+[demo](http://forsigner.com/nice-bar)
 
 ## Features
 
