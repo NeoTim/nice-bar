@@ -2,18 +2,18 @@
 
 A nice and lightweight scrollbar.
 
-# Demo
+## Demo
 
 [demo](http://nice-bar.mipinr.com/)
 
-# Features
+## Features
 
 - Lightweight
 - Nice looking
 - Customize
 - No jQuery dependency
 
-# Install
+## Install
 
 ### bower
 
@@ -27,7 +27,7 @@ $ bower install nice-bar --save
 $ npm install nice-bar --save
 ```
 
-# Usage
+## Usage
 
 ```html
 <link rel="stylesheet" href="bower_components/nice-bar/dist/css/nice-bar.min.css" />
@@ -50,7 +50,7 @@ niceBar.init(document.getElementById('#container'));
 
 ```
 
-# Browser compatibility
+## Browser compatibility
 
 - IE8+
 - Firefox
@@ -58,8 +58,3 @@ niceBar.init(document.getElementById('#container'));
 - Safari
 - Opera
 
-# Use with Angular
-
-```
-// TODO
-```
