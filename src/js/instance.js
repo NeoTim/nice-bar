@@ -25,7 +25,7 @@ var instance = {
 
     this.content = {
       deltaY: 0, // 增量
-      element: createContentElement(),
+      element: createContentElement(element),
       width: $content.clientWidth,
       height: $content.scrollHeight,
       scrollTop: $content.scrollTop,
@@ -86,7 +86,7 @@ function createRailYElement() {
   return dom.createElement('<div class="nice-bar-rail-y"></div>');
 }
 
-function createContentElement() {
+function createContentElement(element) {
   var inner = element.innerHTML;
   var id = guid();
   console.log(id);
