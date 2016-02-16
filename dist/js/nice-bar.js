@@ -382,9 +382,11 @@ var dom = {
     element.innerHTML = string;
     return element.firstElementChild;
   },
+
   appendTo: function appendTo(child, parent) {
     parent.appendChild(child);
   },
+
   addClass: function addClass(element, className) {
     var classes = element.className.split(' ');
     if (classes.indexOf(className) < 0) {
@@ -394,6 +396,7 @@ var dom = {
     element.className = classes.join(' ');
     return element;
   },
+
   removeClass: function removeClass(element, className) {
     var classes = element.className.split(' ');
     var index = classes.indexOf(className);
@@ -404,6 +407,7 @@ var dom = {
     element.className = classes.join(' ');
     return element;
   },
+
   css: function css(element, styleNameOrObject, styleValue) {
     if ((typeof styleNameOrObject === 'undefined' ? 'undefined' : _typeof(styleNameOrObject)) === 'object') {
       return setMultiCss(element, styleNameOrObject);
@@ -415,6 +419,7 @@ var dom = {
       }
     }
   }
+
 };
 
 module.exports = dom;
@@ -426,9 +431,11 @@ var event = {
   bind: function bind(element, name, listener) {
     element.addEventListener(name, listener, false);
   },
+
   unbind: function unbind(element, name, listener) {
     element.removeEventListener(name, listener, false);
   },
+
   once: function once(element, name, listener) {
     var that = this;
     var once = function once(e) {
