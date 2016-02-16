@@ -1,6 +1,6 @@
 {
   "name": "nice-bar",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A nice scrollbar.",
   "main": "./index.js",
   "scripts": {
@@ -11,7 +11,8 @@
     "url": "git+https://github.com/forsigner/nice-bar.git"
   },
   "keywords": [
-    "scrollbar"
+    "scrollbar",
+    "nice"
   ],
   "author": "forsigner",
   "license": "MIT",
