@@ -6,7 +6,7 @@ var guid = require('./util/guid');
 var instance = {
   init: function (element) {
 
-    var $content = document.getElementById('niceBarContent');
+    var $content = createContentElement(element);
     var $railY = createRailYElement();
     var $sliderY = createSliderYElement();
 
@@ -25,7 +25,7 @@ var instance = {
 
     this.content = {
       deltaY: 0, // 增量
-      element: createContentElement(element),
+      element: $content,
       width: $content.clientWidth,
       height: $content.scrollHeight,
       scrollTop: $content.scrollTop,
