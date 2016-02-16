@@ -1,17 +1,17 @@
 'use strict';
 
 var event = {
-  bind(element, name, listener) {
+  bind: function (element, name, listener) {
     element.addEventListener(name, listener, false);
   },
 
-  unbind(element, name, listener) {
+  unbind: function (element, name, listener) {
     element.removeEventListener(name, listener, false);
   },
 
-  once(element, name, listener) {
+  once: function (element, name, listener) {
     var that = this;
-    var once = function(e) {
+    var once = function (e) {
       that.unbind(element, name, once);
       listener(e);
     };

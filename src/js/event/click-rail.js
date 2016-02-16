@@ -3,7 +3,7 @@
 var event = require('../util/event');
 var dom = require('../util/dom');
 
-module.exports =  function(i) {
+module.exports = function (i) {
 
   /**
    * get slider's new top

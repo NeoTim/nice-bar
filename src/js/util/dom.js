@@ -32,17 +32,17 @@ function setMultiCss(element, obj) {
 }
 
 var dom = {
-  createElement(string) {
+  createElement: function (string) {
     var element = document.createElement('div');
     element.innerHTML = string;
     return element.firstElementChild;
   },
 
-  appendTo(child, parent) {
+  appendTo: function (child, parent) {
     parent.appendChild(child);
   },
 
-  addClass(element, className) {
+  addClass: function (element, className) {
     var classes = element.className.split(' ');
     if (classes.indexOf(className) < 0) {
       classes.push(className);
@@ -52,7 +52,7 @@ var dom = {
     return element;
   },
 
-  removeClass(element, className) {
+  removeClass: function (element, className) {
     var classes = element.className.split(' ');
     var index = classes.indexOf(className);
     if (index > -1) {
@@ -63,7 +63,7 @@ var dom = {
     return element;
   },
 
-  css(element, styleNameOrObject, styleValue) {
+  css: function (element, styleNameOrObject, styleValue) {
     if (typeof styleNameOrObject === 'object') {
       return setMultiCss(element, styleNameOrObject);
     } else {

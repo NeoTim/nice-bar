@@ -18,7 +18,7 @@ var instance = {
     this.container = {
       element: element,
       width: element.clientWidth,
-      height: element.clientHeight,
+      height: element.clientHeight
     };
 
     this.ing = true;
@@ -28,7 +28,7 @@ var instance = {
       element: $content,
       width: $content.clientWidth,
       height: $content.scrollHeight,
-      scrollTop: $content.scrollTop,
+      scrollTop: $content.scrollTop
     };
 
     this.ratioX = this.container.width / this.content.width;
@@ -39,7 +39,7 @@ var instance = {
     this.railY = {
       element: $railY,
       width: 400,
-      height: this.container.height,
+      height: this.container.height
     };
 
     this.sliderX = { width: 400, height: '' };
@@ -49,19 +49,19 @@ var instance = {
       element: $sliderY,
       top: 0,
       width: 40,
-      height: this.container.height * this.ratioY,
+      height: this.container.height * this.ratioY
     };
 
     dom.css(this.sliderY.element, 'height', this.sliderY.height + 'px');
 
     dom.css(this.container.element, {
       overflow: 'hidden',
-      position: 'relative',
+      position: 'relative'
     });
 
     dom.css(this.content.element, {
       overflow: 'hidden',
-      height: this.container.height,
+      height: this.container.height
     });
   },
 
@@ -73,7 +73,7 @@ var instance = {
   hideSliderY: function () {
     dom.addClass(this.sliderY.element, 'fade-out');
     dom.removeClass(this.sliderY.element, 'fade-in');
-  },
+  }
 
 };
 

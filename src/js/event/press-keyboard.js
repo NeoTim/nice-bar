@@ -1,5 +1,5 @@
 'use strict';
 
-module.exports = function(i) {
+module.exports = function (i) {
   // todo
 };

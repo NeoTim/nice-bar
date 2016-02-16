@@ -2,18 +2,17 @@
 
 jest.dontMock('../../src/js/util/dom');
 
-describe('dom', function() {
+describe('dom', function () {
   var dom = require('../../src/js/util/dom');
   var buttonStr = '<button id="button" class="button" style="position: absolute;">';
   var $button;
 
-  beforeEach(function() {
+  beforeEach(function () {
     document.body.innerHTML = buttonStr;
     $button = document.getElementById('button');
   });
 
-
-  it('can create element', function() {
+  it('can create element', function () {
     var str = '<div><span>hello world</span></div>';
     var elem = dom.createElement(str);
 
@@ -21,29 +20,29 @@ describe('dom', function() {
     expect(elem.innerHTML).toBe('<span>hello world</span>');
   });
 
-  it('can appenTo', function() {
+  it('can appenTo', function () {
     var elem = dom.createElement('<input id="input" type="text" value="hello" />');
     dom.appendTo(elem, document.body);
     var $input = document.getElementById('input');
     expect($input.value).toBe('hello');
   });
 
-  it('can add class to an element', function() {
+  it('can add class to an element', function () {
     dom.addClass($button, 'my-class');
     expect($button.className).toBe('button my-class');
   });
 
-  it('can remove class to an element', function() {
+  it('can remove class to an element', function () {
     dom.removeClass($button, 'button');
     expect($button.className).toBe('');
   });
 
-  it('Get style of an element', function() {
+  it('Get style of an element', function () {
     var position = dom.css($button, 'position');
     expect(position).toBe('absolute');
   });
 
-  it('can set single css property for an element', function() {
+  it('can set single css property for an element', function () {
     dom.css($button, 'position', 'fixed');
     dom.css($button, 'width', 100);
 
@@ -54,7 +53,7 @@ describe('dom', function() {
     expect(width).toBe(100);
   });
 
-  it('can set multi css property for an element', function() {
+  it('can set multi css property for an element', function () {
     dom.css($button, {
       position: 'fixed',
       width: '100px',

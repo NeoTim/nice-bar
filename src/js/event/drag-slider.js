@@ -3,14 +3,14 @@
 var event = require('../util/event');
 var dom = require('../util/dom');
 
-module.exports = function(i) {
+module.exports = function (i) {
   var originPageY;
   var originTop;
   var originScrollTop;
   var differenceHeight = i.railY.height - i.sliderY.height;
   var ratioY = i.ratioY;
 
-  event.bind(i.sliderY.element, 'mousedown', function(e) {
+  event.bind(i.sliderY.element, 'mousedown', function (e) {
     originPageY = e.pageY;
     originTop = dom.css(i.sliderY.element, 'top');
     originScrollTop = i.content.element.scrollTop;

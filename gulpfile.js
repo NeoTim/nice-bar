@@ -13,7 +13,7 @@ var streamify = require('gulp-streamify');
 
 gulp.task('default', ['less', 'js', 'watch']);
 
-gulp.task('less', function() {
+gulp.task('less', function () {
   return gulp.src('./src/less/*.less')
     .pipe(less())
     .pipe(gulp.dest('./dist/css'))
@@ -22,9 +22,9 @@ gulp.task('less', function() {
     .pipe(gulp.dest('./dist/css'));
 });
 
-gulp.task('js', function() {
+gulp.task('js', function () {
   return browserify('./src/js/browser-main.js')
-    .transform(babelify, {presets: ['es2015']})
+    .transform(babelify, { presets: ['es2015'] })
     .bundle()
     .pipe(source('main.js'))
     .pipe(rename('nice-bar.js'))
@@ -34,7 +34,7 @@ gulp.task('js', function() {
     .pipe(gulp.dest('./dist/js'));
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', function () {
   gulp.watch(['./src/less/*.less'], ['less']);
   gulp.watch(['./src/js/**/*.js'], ['js']);
 });
