@@ -242,7 +242,6 @@ var instance = {
   init: function init(element) {
 
     var $content = createContentElement(element);
-    console.log($content);
     var $railY = createRailYElement();
     var $sliderY = createSliderYElement();
 
@@ -325,9 +324,7 @@ function createRailYElement() {
 function createContentElement(element) {
   var inner = element.innerHTML;
   var id = guid();
-  console.log(id);
   element.innerHTML = '<div id="' + id + '"></div>';
-  console.log(element);
 
   var $content = document.getElementById(id);
   $content.innerHTML = inner;
