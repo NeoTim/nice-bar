@@ -7,6 +7,7 @@ var instance = {
   init: function (element) {
 
     var $content = createContentElement(element);
+    console.log($content);
     var $railY = createRailYElement();
     var $sliderY = createSliderYElement();
 
@@ -91,6 +92,7 @@ function createContentElement(element) {
   var id = guid();
   console.log(id);
   element.innerHTML = '<div id="' + id + '"></div>';
+  console.log(element);
 
   var $content = document.getElementById(id);
   $content.innerHTML = inner;

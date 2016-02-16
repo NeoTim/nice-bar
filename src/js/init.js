@@ -11,7 +11,7 @@ module.exports = function (element) {
   var i = Object.create(instance);
   i.init(element);
 
-  if (i.content.scrollHeight > element.clientHeight) {
+  if (i.content.element.scrollHeight > element.clientHeight) {
     clickRail(i);
     dragSlider(i);
     mouseWheel(i);
