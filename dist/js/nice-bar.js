@@ -220,27 +220,15 @@ var pressKeyboard = require('./event/press-keyboard');
 var hoverContainer = require('./event/hover-container');
 
 module.exports = function (element) {
-  var $content = createContentElement();
+  var i = Object.create(instance);
+  i.init(element);
 
-  if ($content.scrollHeight > element.clientHeight) {
-    var i = Object.create(instance);
-    i.init(element);
-
+  if (i.content.scrollHeight > element.clientHeight) {
     clickRail(i);
     dragSlider(i);
     mouseWheel(i);
     pressKeyboard(i);
     hoverContainer(i);
-  }
-
-  // //////////////////
-  function createContentElement() {
-    var inner = element.innerHTML;
-    element.innerHTML = '<div id="niceBarContent"></div>';
-
-    var $content = document.getElementById('niceBarContent');
-    $content.innerHTML = inner;
-    return $content;
   }
 };
 
@@ -248,6 +236,7 @@ module.exports = function (element) {
 'use strict';
 
 var dom = require('./util/dom');
+var guid = require('./util/guid');
 
 var instance = {
   init: function init(element) {
@@ -271,7 +260,7 @@ var instance = {
 
     this.content = {
       deltaY: 0, // 增量
-      element: $content,
+      element: createContentElement(),
       width: $content.clientWidth,
       height: $content.scrollHeight,
       scrollTop: $content.scrollTop
@@ -332,9 +321,20 @@ function createRailYElement() {
   return dom.createElement('<div class="nice-bar-rail-y"></div>');
 }
 
+function createContentElement() {
+  var inner = element.innerHTML;
+  var id = guid();
+  console.log(id);
+  element.innerHTML = '<div id="' + id + '"></div>';
+
+  var $content = document.getElementById(id);
+  $content.innerHTML = inner;
+  return $content;
+}
+
 module.exports = instance;
 
-},{"./util/dom":10}],9:[function(require,module,exports){
+},{"./util/dom":10,"./util/guid":12}],9:[function(require,module,exports){
 'use strict';
 
 var init = require('./init');
@@ -442,5 +442,16 @@ var event = {
 };
 
 module.exports = event;
+
+},{}],12:[function(require,module,exports){
+'use strict';
+
+module.exports = function () {
+  return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+};
+
+function s4() {
+  return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+}
 
 },{}]},{},[1]);
