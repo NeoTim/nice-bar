@@ -46,10 +46,11 @@ $ npm install nice-bar --save
 ```
 
 ```js
-niceBar.init({
-  element: document.getElementById('#container'),
-  theme: 'dark'
-});
+niceBar.init(document.getElementById('#container'));
+
+// set theme
+niceBar.init(document.getElementById('#container'), {theme: 'dark'});
+
 ```
 
 #### Custom theme
