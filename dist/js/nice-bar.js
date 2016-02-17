@@ -219,9 +219,9 @@ var mouseWheel = require('./event/mouse-wheel');
 var pressKeyboard = require('./event/press-keyboard');
 var hoverContainer = require('./event/hover-container');
 
-module.exports = function (element) {
+module.exports = function (element, options) {
   var i = Object.create(instance);
-  i.init(element);
+  i.init(element, options);
 
   if (i.content.element.scrollHeight > element.clientHeight) {
     clickRail(i);
@@ -239,11 +239,18 @@ var dom = require('./util/dom');
 var guid = require('./util/guid');
 
 var instance = {
-  init: function init(element) {
+  init: function init(element, options) {
+    if (options) {
+      options = { theme: options.theme || 'light' };
+    } else {
+      options = { theme: 'light' };
+    }
 
     var $content = createContentElement(element);
     var $railY = createRailYElement();
     var $sliderY = createSliderYElement();
+
+    setTheme(element, options);
 
     dom.appendTo($railY, element);
     dom.appendTo($sliderY, element);
@@ -313,6 +320,11 @@ var instance = {
 };
 
 // ////////////////////////////////////////
+function setTheme(element, optopns) {
+  dom.addClass(element, 'theme-' + optopns.theme);
+  dom.addClass(element, 'nice-bar');
+}
+
 function createSliderYElement() {
   return dom.createElement('<div class="nice-bar-slider-y"></div>');
 }

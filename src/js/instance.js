@@ -4,11 +4,18 @@ var dom = require('./util/dom');
 var guid = require('./util/guid');
 
 var instance = {
-  init: function (element) {
+  init: function (element, options) {
+    if (options) {
+      options = { theme: options.theme || 'light' };
+    } else {
+      options = { theme: 'light' };
+    }
 
     var $content = createContentElement(element);
     var $railY = createRailYElement();
     var $sliderY = createSliderYElement();
+
+    setTheme(element, options);
 
     dom.appendTo($railY, element);
     dom.appendTo($sliderY, element);
@@ -78,6 +85,11 @@ var instance = {
 };
 
 // ////////////////////////////////////////
+function setTheme(element, optopns) {
+  dom.addClass(element, 'theme-' +  optopns.theme);
+  dom.addClass(element, 'nice-bar');
+}
+
 function createSliderYElement() {
   return dom.createElement('<div class="nice-bar-slider-y"></div>');
 }
