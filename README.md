@@ -46,8 +46,21 @@ $ npm install nice-bar --save
 ```
 
 ```js
-niceBar.init(document.getElementById('#container'));
+niceBar.init({
+  element: document.getElementById('#container'),
+  theme: 'dark'
+});
+```
 
+#### Custom theme
+
+You can custom scrollbar style with CSS easily:
+
+``` CSS
+.nice-bar .nice-bar-slider-y {
+  background: #222;
+  /* whatever */
+}
 ```
 
 ## Browser compatibility
@@ -57,4 +70,3 @@ niceBar.init(document.getElementById('#container'));
 - Chrome
 - Safari
 - Opera
-
