@@ -8,6 +8,7 @@ A nice and lightweight scrollbar.
 
 ## Features
 
+- Cross browser
 - Lightweight
 - Nice looking
 - Customize
