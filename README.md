@@ -72,3 +72,8 @@ You can custom scrollbar style with CSS easily:
 - Chrome
 - Safari
 - Opera
+
+
+## License
+
+  [MIT](LICENSE)
