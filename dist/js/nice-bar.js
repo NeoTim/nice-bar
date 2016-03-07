@@ -114,7 +114,7 @@ module.exports = function (i) {
    */
   function mouseMoveHandler(e) {
     i.showSliderY();
-
+    i.sliderY.isDragging = true;
     i.sliderY.deltaY = 0;
 
     // update slider
@@ -143,6 +143,7 @@ module.exports = function (i) {
   function mouseUpHandler() {
     event.unbind(document, 'mousemove', mouseMoveHandler);
 
+    i.sliderY.isDragging = false;
     i.hideSliderY();
   }
 };
@@ -158,7 +159,9 @@ module.exports = function (i) {
   });
 
   event.bind(i.container.element, 'mouseleave', function (e) {
-    i.hideSliderY();
+    if (!i.sliderY.isDragging) {
+      i.hideSliderY();
+    }
   });
 };
 
@@ -291,7 +294,8 @@ var instance = {
       element: $sliderY,
       top: 0,
       width: 40,
-      height: this.container.height * this.ratioY
+      height: this.container.height * this.ratioY,
+      isDragging: false
     };
 
     dom.css(this.sliderY.element, 'height', this.sliderY.height + 'px');
