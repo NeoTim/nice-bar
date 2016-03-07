@@ -56,7 +56,8 @@ var instance = {
       element: $sliderY,
       top: 0,
       width: 40,
-      height: this.container.height * this.ratioY
+      height: this.container.height * this.ratioY,
+      isDragging: false
     };
 
     dom.css(this.sliderY.element, 'height', this.sliderY.height + 'px');

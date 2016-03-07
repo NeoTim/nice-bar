@@ -27,7 +27,7 @@ module.exports = function (i) {
    */
   function mouseMoveHandler(e) {
     i.showSliderY();
-
+    i.sliderY.isDragging = true;
     i.sliderY.deltaY = 0;
 
     // update slider
@@ -56,6 +56,7 @@ module.exports = function (i) {
   function mouseUpHandler() {
     event.unbind(document, 'mousemove', mouseMoveHandler);
 
+    i.sliderY.isDragging = false;
     i.hideSliderY();
   }
 };

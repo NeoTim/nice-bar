@@ -8,7 +8,9 @@ module.exports = function (i) {
   });
 
   event.bind(i.container.element, 'mouseleave', function (e) {
-    i.hideSliderY();
+    if (!i.sliderY.isDragging) {
+      i.hideSliderY();
+    }
   });
 
 };
